@@ -133,7 +133,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
 @media print{ header.top,.tabs,.btn{display:none!important} }
 </style>
 <script src="config.js?v=2"></script>
-<script src="questions.js?v=2"></script>
+<script src="questions.js?v=3"></script>
 </head>
 <body>
 
@@ -360,11 +360,18 @@ const OPEN_NAMES = ["無法判定／未作答", "第一層｜內容辨認", "第
 const LAYER_COLORS = ["", "var(--l1)", "var(--l2)", "var(--l3)", "var(--l4)"];
 const need = n => Math.ceil(n * 0.6);   // 3題要2題、2題要2題、1題要1題
 
+// 簡體字轉繁體（只轉作答常見字，讓關鍵詞對得到）
+const S2T = {"温":"溫","欢":"歡","妈":"媽","爱":"愛","记":"記","忆":"憶","时":"時","亲":"親","怀":"懷","关":"關","顾":"顧","觉":"覺","让":"讓","动":"動","饭":"飯","喂":"餵","凉":"涼","们":"們","样":"樣","这":"這","为":"為","么":"麼","种":"種","统":"統","传":"傳","华":"華","礼":"禮","陆":"陸","岁":"歲","长":"長","寿":"壽","养":"養","疗":"療","愈":"癒","兰":"蘭","国":"國","从":"從","对":"對","给":"給","说":"說","会":"會","吗":"嗎","见":"見","气":"氣","乡":"鄉","庭":"庭","馨":"馨","怜":"憐","颜":"顏","鲜":"鮮","肉":"肉","松":"鬆","鸡":"雞","精":"精","吹":"吹","汤":"湯","粮":"糧","杂":"雜","连":"連","结":"結","惯":"慣","传统":"傳統"};
+const toTrad = t => String(t || "").replace(/[\u4e00-\u9fff]/g, c => S2T[c] || c);
+
 function classifyOpen(text){
-  const s = String(text || "").replace(/\s/g, "");
+  const s = toTrad(String(text || "").replace(/\s/g, ""));
   if(!s) return { level:0, reason:"未作答" };
   const K = P.openKeywords, has = list => [...new Set(list.filter(w => s.includes(w)))];
   const d = has(K.detail), m = has(K.meaning), p = has(K.personal);
+  // 連結自身經驗：去掉「我印象最深的是」這類開頭後，句子裡仍有「我」，並出現「也、小時候、以前、常常、每次、生病」
+  const own = s.replace(/讓?我印象(最)?深(刻)?的?(部分)?(是|就是)?/g, "");
+  if(/我/.test(own) && /也|小時候|以前|常常|每次|生病/.test(own) && !p.includes("自身經驗")) p.push("自身經驗");
   if(m.length && (d.length || m.length >= 2))
     return { level:3, reason:`提到文本細節「${(d.length ? d : m).slice(0,2).join("、")}」，並說出背後意涵「${m.slice(0,2).join("、")}」` };
   if(p.length || m.length)
