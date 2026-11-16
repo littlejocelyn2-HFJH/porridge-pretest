@@ -114,20 +114,20 @@ details.stu .body{padding:0 14px 14px}
 .welcome{background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:10px 14px;font-size:15px;margin-top:14px}
 header.top h1{cursor:pointer}
 /* 大屏 */
-body.screen{background:#1f1812;color:#fff8ec}
+body.screen{background:#fbf3e4;color:#2e2219}
 #pg-screen{padding:3vh 4vw;min-height:100vh}
 .sc-title{font-size:min(4.2vw,7vh);font-weight:900;margin:0}
-#scCls{background:#3c3127;color:#fff8ec;border:1px solid #6b5946;font-size:min(1.4vw,2.4vh);padding:.4vh .8vw;border-radius:.6vw}
-.sc-sub{font-size:min(2vw,3.2vh);opacity:.8}
+#scCls{background:#fff;color:#2e2219;border:2px solid #d9c7ad;font-size:min(1.4vw,2.4vh);padding:.4vh .8vw;border-radius:.6vw}
+.sc-sub{font-size:min(2vw,3.2vh);color:#7c6b5c}
 .sc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3vw;margin-top:2.5vh}
-.sc-box{background:#2d241b;border-radius:2vw;padding:3vh 2.4vw}
-.sc-box h3{font-size:min(2.2vw,3.6vh);margin:0 0 1.2vh;color:#ffd9a8}
+.sc-box{background:#fff;border:2px solid #ead9c0;border-radius:2vw;padding:3vh 2.4vw;box-shadow:0 .6vh 2vh rgba(122,74,34,.08)}
+.sc-box h3{font-size:min(2.2vw,3.6vh);margin:0 0 1.2vh;color:#9a4f12}
 .sc-big{font-size:min(8vw,12vh);font-weight:900;line-height:1}
 .seats{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw;margin-top:2vh}
-.seats div{height:min(4.6vw,7vh);border-radius:.8vw;display:flex;align-items:center;justify-content:center;font-size:min(1.9vw,3.2vh);font-weight:800;background:#3c3127;color:#a4927d}
-.seats div.on{background:#f0a050;color:#2a1b0c}
+.seats div{height:min(4.6vw,7vh);border-radius:.8vw;display:flex;align-items:center;justify-content:center;font-size:min(1.9vw,3.2vh);font-weight:800;background:#f1e7d8;color:#b3a08a}
+.seats div.on{background:#d9752a;color:#fff}
 .sc-row{display:grid;grid-template-columns:9vw 1fr 7vw;gap:1.2vw;align-items:center;margin:1vh 0;font-size:min(2vw,3.4vh);font-weight:800}
-.sc-bar{height:3.2vh;background:#3c3127;border-radius:2vh;overflow:hidden}
+.sc-bar{height:3.2vh;background:#f1e7d8;border-radius:2vh;overflow:hidden}
 .sc-bar b{display:block;height:100%}
 @media (max-width:640px){ .hrow{grid-template-columns:90px 1fr 54px} .stem{font-size:17px} }
 @media print{ header.top,.tabs,.btn{display:none!important} }
@@ -853,10 +853,10 @@ let screenTimer = null;
 async function renderScreen(){
   const el = $("#pg-screen");
   const pw = SS.get("mz_pw");
-  if(!pw){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>大屏需要老師登入</h3><p>請先到 <a href="#scores" style="color:#ffd9a8">成績頁</a> 登入，再按「開啟大屏展示」。</p></div>`; return; }
+  if(!pw){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>大屏需要老師登入</h3><p>請先到 <a href="#scores" style="color:#9a4f12">成績頁</a> 登入，再按「開啟大屏展示」。</p></div>`; return; }
   let r;
   try{ r = await api({ action:"list", item:ITEM, password:pw }); }catch(e){ return; }
-  if(!r.ok || !r.authed){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>登入已失效</h3><p><a href="#scores" style="color:#ffd9a8">回成績頁重新登入</a></p></div>`; return; }
+  if(!r.ok || !r.authed){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>登入已失效</h3><p><a href="#scores" style="color:#9a4f12">回成績頁重新登入</a></p></div>`; return; }
   DATA = r;
   const classes = [...new Set(r.rows.map(x => x.cls))].sort(); if(!classes.includes(curCls)) curCls = classes[0] || "";
   const S = analyzedClass(), n = S.length;
@@ -865,13 +865,13 @@ async function renderScreen(){
   const lv = [0,0,0,0,0]; S.forEach(x => lv[x.A.level]++);
   el.innerHTML = `<div class="row"><div><p class="sc-title">🍚 〈以粥養生〉初讀小檢查</p><div class="sc-sub">${esc(curCls)} 班・每 15 秒自動更新</div></div><span class="spacer"></span>
       <select id="scCls">${classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
-      <a href="#scores" style="color:#ffd9a8;font-size:1.4vw;margin-left:1vw">離開</a></div>
+      <a href="#scores" style="color:#9a4f12;font-size:1.4vw;margin-left:1vw">離開</a></div>
     <div class="sc-grid">
       <div class="sc-box"><h3>已完成</h3><div class="sc-big">${n}<span style="font-size:3vw"> 人</span></div>
         <div class="seats">${Array.from({ length:maxSeat }, (_,i) => `<div class="${doneSeats.has(String(i+1)) ? "on" : ""}">${i+1}</div>`).join("")}</div></div>
       <div class="sc-box"><h3>全班各層次答對率</h3>
         ${P.layers.map(L => { const c = S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), tot = n * x0(L.id), p = pct(c,tot);
-          return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#7aa7d6","#6cc3b4","#e6b45a","#cf86a8"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
+          return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#3f6fa3","#2c8a7b","#c58b2a","#a2557a"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
         <h3 style="margin-top:2vh">閱讀層級分布</h3>
         ${[0,1,2,3,4].map(l => `<div class="sc-row" style="font-size:min(1.6vw,2.8vh);margin:.6vh 0"><div>第${l}層</div><div class="sc-bar"><b style="width:${pct(lv[l],n)}%;background:${TYPES[l].color}"></b></div><div>${lv[l]}人</div></div>`).join("")}
       </div></div>`;
