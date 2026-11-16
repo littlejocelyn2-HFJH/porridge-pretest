@@ -3,7 +3,7 @@
  * 改完請把 index.html 裡 config.js?v= 的數字加 1，避免學生手機抓到舊檔。
  */
 window.MZ_CONFIG = {
-  sheetApi: "",
+  sheetApi: "https://script.google.com/macros/s/AKfycbxfgbo4e4_ewFIFrgE9MCfL1dnXTJJ6UzjTQY5VaqkA9umRwATnT3Ha0zZK9UsuZ9OMCQ/exec",
   // 疑似亂答：用時少於幾秒（本前測約 8～10 分鐘，預設 90 秒；老師在成績頁也可以臨時調整）
   suspectSeconds: 90,
   // 診斷分析預設使用每位學生的「第一次」作答（最能反映起點）
