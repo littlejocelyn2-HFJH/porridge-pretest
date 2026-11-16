@@ -126,6 +126,13 @@ body.screen{background:#fbf3e4;color:#2e2219}
 .seats{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw;margin-top:2vh}
 .seats div{height:min(4.6vw,7vh);border-radius:.8vw;display:flex;align-items:center;justify-content:center;font-size:min(1.9vw,3.2vh);font-weight:800;background:#f1e7d8;color:#b3a08a}
 .seats div.on{background:#d9752a;color:#fff}
+.seats div{position:relative}
+.seats div i{position:absolute;top:.4vh;right:.35vw;font-style:normal;font-size:min(1.05vw,1.7vh);line-height:1.2;background:rgba(255,255,255,.92);color:#2e2219;border-radius:.4vw;padding:0 .35vw;font-weight:900}
+.lvleg{display:flex;flex-wrap:wrap;gap:.6vw;margin-top:1.6vh;font-size:min(1.3vw,2.2vh);font-weight:800}
+.lvleg span{display:inline-flex;align-items:center;gap:.4vw}
+.lvleg b{display:inline-block;width:min(1.6vw,2.6vh);height:min(1.6vw,2.6vh);border-radius:.4vw}
+#scLv{background:#fff;color:#2e2219;border:2px solid #d9c7ad;font-size:min(1.3vw,2.2vh);padding:.4vh .9vw;border-radius:999px;cursor:pointer;font-weight:800;margin-left:1vw}
+#scLv.on{background:#2e2219;color:#fff;border-color:#2e2219}
 .sc-row{display:grid;grid-template-columns:9vw 1fr 7vw;gap:1.2vw;align-items:center;margin:1vh 0;font-size:min(2vw,3.4vh);font-weight:800}
 .sc-bar{height:3.2vh;background:#f1e7d8;border-radius:2vh;overflow:hidden}
 .sc-bar b{display:block;height:100%}
@@ -873,19 +880,28 @@ async function renderScreen(){
   const S = analyzedClass(), n = S.length;
   const maxSeat = Math.max(30, ...classRows().map(x => Number(x.seat) || 0));
   const doneSeats = new Set(S.map(x => x.r.seat));
+  const seatLv = {}; S.forEach(x => seatLv[x.r.seat] = x.A.level);
+  const showLv = !!LS.get("mz_screen_lv", false);
+  const LVC = ["#c0392b","#e67e22","#d4a017","#2e86c1","#27864a"], LVN = ["起步","擷取","推論","詮釋","評估"];
+  const seatCell = n => { const k = String(n), done = doneSeats.has(k);
+    if(!done) return `<div>${n}</div>`;
+    if(!showLv) return `<div class="on">${n}</div>`;
+    const l = seatLv[k]; return `<div class="on" style="background:${LVC[l]};color:#fff">${n}<i>${l}</i></div>`; };
   const lv = [0,0,0,0,0]; S.forEach(x => lv[x.A.level]++);
   el.innerHTML = `<div class="row"><div><p class="sc-title">🍚 〈以粥養生〉初讀小檢查</p><div class="sc-sub">${esc(curCls)} 班・每 15 秒自動更新</div></div><span class="spacer"></span>
-      <select id="scCls">${classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
+      <button id="scLv" class="${showLv ? "on" : ""}">${showLv ? "隱藏層級" : "顯示層級"}</button><select id="scCls" style="margin-left:1vw">${classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
       <a href="#scores" style="color:#9a4f12;font-size:1.4vw;margin-left:1vw">離開</a></div>
     <div class="sc-grid">
       <div class="sc-box"><h3>已完成</h3><div class="sc-big">${n}<span style="font-size:3vw"> 人</span></div>
-        <div class="seats">${Array.from({ length:maxSeat }, (_,i) => `<div class="${doneSeats.has(String(i+1)) ? "on" : ""}">${i+1}</div>`).join("")}</div></div>
+        <div class="seats">${Array.from({ length:maxSeat }, (_,i) => seatCell(i+1)).join("")}</div>
+        ${showLv ? `<div class="lvleg">${LVN.map((t,l) => `<span><b style="background:${LVC[l]}"></b>${l} ${t}</span>`).join("")}</div>` : ""}</div>
       <div class="sc-box"><h3>全班各層次答對率</h3>
         ${P.layers.map(L => { const c = S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), tot = n * x0(L.id), p = pct(c,tot);
           return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#3f6fa3","#2c8a7b","#c58b2a","#a2557a"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
         <h3 style="margin-top:2vh">閱讀層級分布</h3>
-        ${[0,1,2,3,4].map(l => `<div class="sc-row" style="font-size:min(1.6vw,2.8vh);margin:.6vh 0"><div>第${l}層</div><div class="sc-bar"><b style="width:${pct(lv[l],n)}%;background:${TYPES[l].color}"></b></div><div>${lv[l]}人</div></div>`).join("")}
+        ${[0,1,2,3,4].map(l => `<div class="sc-row" style="font-size:min(1.6vw,2.8vh);margin:.6vh 0"><div>第${l}層 <span style="font-size:.8em;color:#7c6b5c">${LVN[l]}</span></div><div class="sc-bar"><b style="width:${pct(lv[l],n)}%;background:${LVC[l]}"></b></div><div>${lv[l]}人</div></div>`).join("")}
       </div></div>`;
+  const lvBtn = $("#scLv"); if(lvBtn) lvBtn.onclick = () => { LS.set("mz_screen_lv", !LS.get("mz_screen_lv", false)); renderScreen(); };
   const sel = $("#scCls"); if(sel) sel.onchange = e => { curCls = e.target.value; LS.set("mz_cls_sel", curCls); renderScreen(); };
 }
 
