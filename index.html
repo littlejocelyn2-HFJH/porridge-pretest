@@ -92,6 +92,27 @@ details.stu .body{padding:0 14px 14px}
 .lvbadge{font-weight:800;border-radius:8px;padding:2px 8px;font-size:13px;color:#fff}
 .quote{background:var(--rice);border-radius:8px;padding:8px 12px;margin:6px 0;white-space:pre-wrap}
 
+/* 主畫面 */
+.hero{text-align:center;padding:34px 20px 26px;background:linear-gradient(160deg,#fffdf8 0%,#f7e8d3 100%);border:1px solid var(--line);border-radius:22px;margin-top:18px;position:relative;overflow:hidden}
+.hero .bigbowl{font-size:64px;line-height:1;display:block;margin-bottom:6px}
+.hero .steam{position:absolute;left:50%;top:14px;transform:translateX(-50%);font-size:22px;opacity:.35;letter-spacing:10px}
+.hero h2{font-size:30px;margin:4px 0 2px;letter-spacing:.04em}
+.hero .by{color:var(--muted);font-size:15px}
+.hero .lead{font-size:18px;font-weight:700;color:var(--soy);margin:14px 0 4px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px}
+.chips span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600}
+.homebtns{display:grid;gap:12px;margin:18px 0}
+.homebtn{display:flex;align-items:center;gap:14px;text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:18px;padding:16px 18px;cursor:pointer;text-decoration:none;color:var(--ink);width:100%}
+.homebtn .ic{font-size:34px;flex:0 0 auto}
+.homebtn b{display:block;font-size:19px}
+.homebtn small{color:var(--muted);font-size:14px}
+.homebtn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+.homebtn.main small{color:#ffe9d6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+.steps div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;font-size:14px}
+.steps div b{display:block;font-size:22px;color:var(--accent)}
+.welcome{background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:10px 14px;font-size:15px;margin-top:14px}
+header.top h1{cursor:pointer}
 /* 大屏 */
 body.screen{background:#1f1812;color:#fff8ec}
 #pg-screen{padding:3vh 4vw;min-height:100vh}
@@ -123,7 +144,26 @@ body.screen{background:#1f1812;color:#fff8ec}
 </header>
 
 <!-- ============ 學生頁 ============ -->
-<main id="pg-student" class="wrap">
+<main id="pg-home" class="wrap hidden">
+  <section class="hero">
+    <span class="steam">∿ ∿ ∿</span>
+    <span class="bigbowl">🍚</span>
+    <h2>〈以粥養生〉</h2>
+    <div class="by">韓良憶</div>
+    <div class="lead">初讀理解小檢查</div>
+    <div class="chips"><span>📝 9 題</span><span>⏱️ 約 8～10 分鐘</span><span>🌱 不計分</span><span>📱 手機、電腦都可以</span></div>
+    <div id="homeWelcome" class="welcome hidden"></div>
+  </section>
+  <div class="homebtns">
+    <a class="homebtn main" href="#quiz"><span class="ic">✏️</span><span><b id="homeGoLabel">我是學生，開始作答</b><small>先登記班級、座號、姓名，再一題一題作答</small></span></a>
+    <a class="homebtn" href="#scores"><span class="ic">📋</span><span><b>老師入口</b><small>完成名單、成績與診斷分析、大屏展示</small></span></a>
+  </div>
+  <h3>作答三步驟</h3>
+  <div class="steps"><div><b>1</b>登記班級<br>座號、姓名</div><div><b>2</b>讀題作答<br>8 選 1 寫</div><div><b>3</b>按下送出<br>交給老師</div></div>
+  <p class="small muted" style="text-align:center;margin-top:18px">這份小檢查是讓老師了解大家讀懂了哪些地方，不會公布分數。</p>
+</main>
+
+<main id="pg-student" class="wrap hidden">
   <section id="v-intro" class="card">
     <h2 id="introTitle"></h2>
     <p class="muted" id="introSub"></p>
@@ -138,6 +178,7 @@ body.screen{background:#1f1812;color:#fff8ec}
     <div class="row" style="margin-top:14px">
       <button class="btn primary" id="startBtn">開始作答</button>
       <button class="btn sm" id="changeMe">不是我？重新登記</button>
+      <a class="btn sm" href="#">🏠 主畫面</a>
     </div>
   </section>
 
@@ -153,6 +194,7 @@ body.screen{background:#1f1812;color:#fff8ec}
   <section id="v-done" class="card hidden">
     <h2>✅ 已經送出，謝謝你！</h2>
     <p>老師會根據全班的作答，設計接下來的閱讀活動。現在可以關掉這個頁面了。</p>
+    <p><a class="btn" href="#">🏠 回主畫面</a></p>
     <div id="codeBox" class="hidden">
       <div class="banner">⚠️ 網路好像有問題，作答<b>還沒送到老師那裡</b>。請按「複製成績碼」，貼到 Google Classroom 的私人留言給老師。</div>
       <textarea class="t" id="codeText" readonly style="margin-top:8px;min-height:90px;font-size:12px"></textarea>
@@ -190,7 +232,7 @@ body.screen{background:#1f1812;color:#fff8ec}
     <div class="tabs" id="tabs"></div>
     <div id="tabBody"></div>
   </section>
-  <p class="small muted" style="text-align:center"><a href="#">← 回到作答頁</a></p>
+  <p class="small muted" style="text-align:center"><a href="#">🏠 回主畫面</a></p>
 </main>
 
 <!-- ============ 大屏 ============ -->
@@ -842,18 +884,33 @@ function route(){
   clearInterval(screenTimer);
   document.body.classList.toggle("screen", h === "#screen");
   $("#topbar").classList.toggle("hidden", h === "#screen");
-  $("#pg-student").classList.toggle("hidden", h === "#scores" || h === "#screen");
+  const isHome = !["#quiz","#scores","#screen"].includes(h);
+  $("#pg-home").classList.toggle("hidden", !isHome);
+  $("#pg-student").classList.toggle("hidden", h !== "#quiz");
   $("#pg-scores").classList.toggle("hidden", h !== "#scores");
   $("#pg-screen").classList.toggle("hidden", h !== "#screen");
   if(h === "#scores"){ $("#regMask").classList.add("hidden"); $("#topTitle").textContent = "〈以粥養生〉前測・成績與診斷"; loadScores(); }
   else if(h === "#screen"){ $("#regMask").classList.add("hidden"); renderScreen(); screenTimer = setInterval(renderScreen, 15000); }
-  else {
+  else if(h === "#quiz"){
     $("#topTitle").textContent = "〈以粥養生〉初讀理解小檢查";
-    if(!student) openReg(); else if(!quiz || $("#v-quiz").classList.contains("hidden")) showIntro();
+    showIntroIfIdle();
+    if(!student) openReg();
   }
+  else { $("#regMask").classList.add("hidden"); $("#topTitle").textContent = "〈以粥養生〉初讀理解小檢查"; renderHome(); }
+}
+function showIntroIfIdle(){ if(!quiz || $("#v-quiz").classList.contains("hidden")) showIntro(); }
+function renderHome(){
+  const w = $("#homeWelcome");
+  if(student){
+    const done = LS.get(doneKey(), null);
+    w.innerHTML = `👋 歡迎，<b>${esc(student.cls)} 班 ${esc(student.seat)} 號 ${esc(student.name)}</b>` + (done ? `<br><span class="c-ok">✓ 你已經完成這份小檢查了</span>` : "");
+    w.classList.remove("hidden");
+    $("#homeGoLabel").textContent = quiz && !$("#v-quiz").classList.contains("hidden") ? "繼續作答" : done ? "查看作答狀態" : "我是學生，開始作答";
+  } else { w.classList.add("hidden"); $("#homeGoLabel").textContent = "我是學生，開始作答"; }
 }
 window.addEventListener("hashchange", route);
 window.addEventListener("beforeunload", e => { if(quiz && !$("#v-quiz").classList.contains("hidden")){ e.preventDefault(); e.returnValue = ""; } });
+$("#topTitle").onclick = () => { location.hash = "#"; };
 renderWho(); route();
 window.__MZ = { analyze, classifyOpen };
 })();
