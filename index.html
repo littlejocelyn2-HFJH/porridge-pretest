@@ -556,7 +556,7 @@ async function loadScores(){
   $("#modeNote").textContent = note; $("#modeNote2").textContent = note;
   $("#loginRow").classList.toggle("hidden", DATA.authed); $("#logoutRow").classList.toggle("hidden", !DATA.authed);
   const classes = [...new Set(DATA.rows.map(r => r.cls))].sort();
-  if(!classes.includes(curCls)) curCls = classes[0] || "";
+  if(!classes.includes(curCls)) curCls = biggestClass(classes);
   $("#clsSel").innerHTML = classes.length ? classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("") : `<option value="">（尚無資料）</option>`;
   renderPublic(); renderTeacher();
 }
@@ -567,6 +567,10 @@ $("#pwInput").onkeydown = e => { if(e.key === "Enter") $("#loginBtn").click(); }
 $("#logoutBtn").onclick = () => { SS.del("mz_pw"); loadScores(); };
 $("#screenBtn").onclick = () => { location.hash = "#screen"; };
 
+function biggestClass(classes){
+  const cnt = {}; DATA.rows.forEach(r => cnt[r.cls] = (cnt[r.cls] || 0) + 1);
+  return classes.slice().sort((x,y) => (cnt[y]||0) - (cnt[x]||0))[0] || "";
+}
 const classRows = () => DATA.rows.filter(r => r.cls === curCls).sort((a,b) => Number(a.seat) - Number(b.seat));
 const pick = r => { const a = r.attempts || []; return a.length ? (attemptMode === "latest" ? a[a.length-1] : a[0]) : null; };
 
@@ -858,7 +862,7 @@ async function renderScreen(){
   try{ r = await api({ action:"list", item:ITEM, password:pw }); }catch(e){ return; }
   if(!r.ok || !r.authed){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>登入已失效</h3><p><a href="#scores" style="color:#9a4f12">回成績頁重新登入</a></p></div>`; return; }
   DATA = r;
-  const classes = [...new Set(r.rows.map(x => x.cls))].sort(); if(!classes.includes(curCls)) curCls = classes[0] || "";
+  const classes = [...new Set(r.rows.map(x => x.cls))].sort(); if(!classes.includes(curCls)) curCls = biggestClass(classes);
   const S = analyzedClass(), n = S.length;
   const maxSeat = Math.max(30, ...classRows().map(x => Number(x.seat) || 0));
   const doneSeats = new Set(S.map(x => x.r.seat));
