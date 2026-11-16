@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>〈以粥養生〉初讀理解小檢查</title>
+<style>
+:root{
+  --rice:#fbf6ec; --paper:#fffdf8; --ink:#3a2e24; --muted:#7c6b5c; --line:#e6dccb;
+  --soy:#7a4a22; --accent:#c56a24; --accent-soft:#f6e3cf;
+  --ok:#2f7a4a; --ok-soft:#e1f1e6; --bad:#b1412f; --bad-soft:#f8e1dc; --warn:#a46a00; --warn-soft:#fbefd2;
+  --l1:#4f7cac; --l2:#3d9a8b; --l3:#c58b2a; --l4:#a2557a;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--rice);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--soy)}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 80px}
+.wide{max-width:1180px}
+header.top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header.top .bowl{font-size:26px}
+header.top h1{font-size:17px;margin:0;font-weight:700;flex:1}
+header.top .who{font-size:13px;color:var(--muted);text-align:right}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+h2{font-size:20px;margin:0 0 8px}
+h3{font-size:17px;margin:18px 0 8px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 18px;cursor:pointer;font-weight:600;min-height:44px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.dark{background:var(--soy);border-color:var(--soy);color:#fff}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.btn.sm{padding:6px 12px;min-height:34px;font-size:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+label.f{display:block;margin:10px 0 4px;font-weight:600}
+input.t,select.t,textarea.t{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:16px}
+textarea.t{min-height:110px;resize:vertical}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--soy)}
+.L1{background:#e4ecf6;color:var(--l1)} .L2{background:#ddf0ec;color:var(--l2)} .L3{background:#f7ecd6;color:#8a5f12} .L4{background:#f3e1ea;color:var(--l4)}
+
+/* 學生作答 */
+.progress{display:flex;gap:5px;margin:6px 0 2px}
+.progress i{flex:1;height:7px;border-radius:4px;background:var(--line)}
+.progress i.done{background:var(--accent)} .progress i.cur{background:var(--soy)}
+.qnum{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.05em}
+.stem{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;margin:9px 0;cursor:pointer;font-size:16px;line-height:1.55}
+.opt .k{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--rice);font-weight:800;color:var(--soy)}
+.opt.sel{border-color:var(--accent);background:#fff7ef}
+.opt.sel .k{background:var(--accent);color:#fff}
+.navbar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--rice) 30%);padding:18px 0 10px;display:flex;gap:10px}
+.navbar .btn{flex:1}
+
+/* 視窗 */
+.mask{position:fixed;inset:0;background:rgba(40,28,18,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal{background:var(--paper);border-radius:18px;max-width:430px;width:100%;padding:22px;max-height:92vh;overflow:auto}
+.hidden{display:none!important}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:60}
+
+/* 教師端 */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:8px 0}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-weight:600}
+.tabs button.on{background:var(--soy);color:#fff;border-color:var(--soy)}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat .n{font-size:28px;font-weight:800}
+.stat .l{font-size:13px;color:var(--muted)}
+.bar{height:12px;background:#efe7da;border-radius:6px;overflow:hidden}
+.bar>b{display:block;height:100%;border-radius:6px}
+.hrow{display:grid;grid-template-columns:120px 1fr 64px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
+table.tb{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+.tb th,.tb td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+.tb th{background:#f6efe3;position:sticky;top:0;font-size:13px;white-space:nowrap}
+.tb tr.sus td{background:var(--warn-soft)}
+.scroll{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:10px}
+.c-ok{color:var(--ok);font-weight:700} .c-bad{color:var(--bad);font-weight:700}
+.feat{margin:4px 0;padding-left:18px}
+.feat li{margin:2px 0}
+.optline{display:grid;grid-template-columns:26px 1fr 52px;gap:8px;align-items:center;margin:6px 0;font-size:14px}
+.optline .why{grid-column:2/4;font-size:12.5px;color:var(--muted);margin-top:-4px}
+.tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:6px;background:var(--bad-soft);color:var(--bad);margin-left:4px;font-weight:700}
+.typebox{border-left:6px solid var(--accent);padding:10px 14px;border-radius:8px;background:#fff;margin:8px 0}
+.banner{background:var(--warn-soft);border:1px solid #efd9a6;color:#6d4b00;border-radius:10px;padding:10px 14px;font-size:14px}
+details.stu{border:1px solid var(--line);border-radius:12px;background:#fff;margin:8px 0}
+details.stu summary{cursor:pointer;padding:10px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;list-style:none}
+details.stu summary::-webkit-details-marker{display:none}
+details.stu .body{padding:0 14px 14px}
+.lvbadge{font-weight:800;border-radius:8px;padding:2px 8px;font-size:13px;color:#fff}
+.quote{background:var(--rice);border-radius:8px;padding:8px 12px;margin:6px 0;white-space:pre-wrap}
+
+/* 大屏 */
+body.screen{background:#1f1812;color:#fff8ec}
+#pg-screen{padding:3vh 4vw;min-height:100vh}
+.sc-title{font-size:min(4.2vw,7vh);font-weight:900;margin:0}
+#scCls{background:#3c3127;color:#fff8ec;border:1px solid #6b5946;font-size:min(1.4vw,2.4vh);padding:.4vh .8vw;border-radius:.6vw}
+.sc-sub{font-size:min(2vw,3.2vh);opacity:.8}
+.sc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3vw;margin-top:2.5vh}
+.sc-box{background:#2d241b;border-radius:2vw;padding:3vh 2.4vw}
+.sc-box h3{font-size:min(2.2vw,3.6vh);margin:0 0 1.2vh;color:#ffd9a8}
+.sc-big{font-size:min(8vw,12vh);font-weight:900;line-height:1}
+.seats{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw;margin-top:2vh}
+.seats div{height:min(4.6vw,7vh);border-radius:.8vw;display:flex;align-items:center;justify-content:center;font-size:min(1.9vw,3.2vh);font-weight:800;background:#3c3127;color:#a4927d}
+.seats div.on{background:#f0a050;color:#2a1b0c}
+.sc-row{display:grid;grid-template-columns:9vw 1fr 7vw;gap:1.2vw;align-items:center;margin:1vh 0;font-size:min(2vw,3.4vh);font-weight:800}
+.sc-bar{height:3.2vh;background:#3c3127;border-radius:2vh;overflow:hidden}
+.sc-bar b{display:block;height:100%}
+@media (max-width:640px){ .hrow{grid-template-columns:90px 1fr 54px} .stem{font-size:17px} }
+@media print{ header.top,.tabs,.btn{display:none!important} }
+</style>
+<script src="config.js?v=1"></script>
+<script src="questions.js?v=2"></script>
+</head>
+<body>
+
+<header class="top" id="topbar">
+  <span class="bowl">🍚</span>
+  <h1 id="topTitle">〈以粥養生〉初讀理解小檢查</h1>
+  <div class="who" id="whoBox"></div>
+</header>
+
+<!-- ============ 學生頁 ============ -->
+<main id="pg-student" class="wrap">
+  <section id="v-intro" class="card">
+    <h2 id="introTitle"></h2>
+    <p class="muted" id="introSub"></p>
+    <ul>
+      <li>共 <b>9 題</b>：8 題選擇題＋1 題簡短寫作，大約 <b>8～10 分鐘</b>。</li>
+      <li>這<b>不是考試、不計分</b>，是讓老師了解大家讀懂了哪些地方。</li>
+      <li>請<b>依照課文內容</b>作答，不需要用到課外知識。</li>
+      <li>作答時不會顯示答案。遇到不確定的題目，選你覺得最合理的就好。</li>
+    </ul>
+    <div id="doneNotice" class="banner hidden" style="margin:10px 0">你已經完成過這份小檢查囉！老師會以你<b>第一次</b>的作答為主。除非老師請你重做，否則不用再寫一次。</div>
+    <div id="pendingNotice" class="banner hidden" style="margin:10px 0">你上次的作答還沒成功送出。<button class="btn sm" id="retryPending">再送一次</button></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn primary" id="startBtn">開始作答</button>
+      <button class="btn sm" id="changeMe">不是我？重新登記</button>
+    </div>
+  </section>
+
+  <section id="v-quiz" class="hidden">
+    <div class="progress" id="prog"></div>
+    <div class="card" id="qcard"></div>
+    <div class="navbar">
+      <button class="btn" id="prevBtn">← 上一題</button>
+      <button class="btn primary" id="nextBtn">下一題 →</button>
+    </div>
+  </section>
+
+  <section id="v-done" class="card hidden">
+    <h2>✅ 已經送出，謝謝你！</h2>
+    <p>老師會根據全班的作答，設計接下來的閱讀活動。現在可以關掉這個頁面了。</p>
+    <div id="codeBox" class="hidden">
+      <div class="banner">⚠️ 網路好像有問題，作答<b>還沒送到老師那裡</b>。請按「複製成績碼」，貼到 Google Classroom 的私人留言給老師。</div>
+      <textarea class="t" id="codeText" readonly style="margin-top:8px;min-height:90px;font-size:12px"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn dark" id="copyCode">複製成績碼</button><button class="btn" id="retrySend">再試著送出一次</button></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ 成績頁／教師頁 ============ -->
+<main id="pg-scores" class="wrap wide hidden">
+  <section class="card">
+    <div class="row">
+      <h2 style="margin:0">📋 前測完成情形</h2>
+      <span class="spacer"></span>
+      <label class="small muted">班級</label>
+      <select class="t" id="clsSel" style="width:auto;min-width:110px"></select>
+      <button class="btn sm" id="reloadBtn">重新整理</button>
+    </div>
+    <div class="row" style="margin-top:10px" id="loginRow">
+      <input class="t" type="password" id="pwInput" placeholder="老師密碼" style="max-width:220px">
+      <button class="btn dark sm" id="loginBtn">老師登入</button>
+      <span class="small muted" id="modeNote"></span>
+    </div>
+    <div class="row hidden" style="margin-top:10px" id="logoutRow">
+      <span class="pill">老師已登入</span>
+      <button class="btn sm" id="screenBtn">🖥️ 開啟大屏展示</button>
+      <button class="btn sm" id="logoutBtn">登出</button>
+      <span class="small muted" id="modeNote2"></span>
+    </div>
+  </section>
+
+  <section id="publicList" class="card"></section>
+
+  <section id="teacherArea" class="hidden">
+    <div class="tabs" id="tabs"></div>
+    <div id="tabBody"></div>
+  </section>
+  <p class="small muted" style="text-align:center"><a href="#">← 回到作答頁</a></p>
+</main>
+
+<!-- ============ 大屏 ============ -->
+<main id="pg-screen" class="hidden"></main>
+
+<!-- 登記視窗 -->
+<div class="mask hidden" id="regMask">
+  <div class="modal">
+    <h2>🍚 先登記一下</h2>
+    <p class="muted small">只需要班級、座號和姓名，這台裝置下次會自動記住。</p>
+    <label class="f">班級</label><input class="t" id="rCls" placeholder="例如 801" inputmode="numeric" autocomplete="off">
+    <label class="f">座號</label><input class="t" id="rSeat" placeholder="例如 12" inputmode="numeric" autocomplete="off">
+    <label class="f">姓名</label><input class="t" id="rName" placeholder="你的名字" autocomplete="off">
+    <div class="row" style="margin-top:16px"><button class="btn primary" id="regOk" style="flex:1">確定</button></div>
+    <p class="small" style="text-align:center;margin:14px 0 0"><a href="#scores" id="teacherSkip">我是老師，先略過，直接看班級成績 →</a></p>
+  </div>
+</div>
+
+<!-- 確認交卷 -->
+<div class="mask hidden" id="confirmMask">
+  <div class="modal">
+    <h2>準備送出了嗎？</h2>
+    <div id="confirmMsg"></div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="confirmBack" style="flex:1">再檢查一下</button>
+      <button class="btn primary" id="confirmGo" style="flex:1">確定送出</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ================= 基本設定 ================= */
+const CFG = window.MZ_CONFIG || {};
+const API = (CFG.sheetApi || "").trim();
+const P = window.PRETEST, Q = P.questions, OPEN = P.open, ITEM = P.item;
+const LETTER = "ABCD";
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const SS = {
+  get(k){ try{ return sessionStorage.getItem(k) || ""; }catch(e){ return ""; } },
+  set(k, v){ try{ sessionStorage.setItem(k, v); }catch(e){} },
+  del(k){ try{ sessionStorage.removeItem(k); }catch(e){} }
+};
+function toast(msg){ const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), 2400); }
+function fmtTime(iso){ if(!iso) return ""; const d = new Date(iso); if(isNaN(d)) return iso; const p = n => String(n).padStart(2,"0"); return `${d.getMonth()+1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+function fmtDur(s){ s = Math.round(s||0); return s >= 60 ? `${Math.floor(s/60)}分${s%60}秒` : `${s}秒`; }
+function normSeat(s){ const n = parseInt(String(s).replace(/[^\d]/g,""),10); return isNaN(n) ? String(s).trim() : String(n); }
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); toast("已複製"); }
+  catch(e){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); toast("已複製"); }catch(_){ toast("請手動複製"); } ta.remove(); }
+}
+
+/* ================= 後端（或本機模式） ================= */
+async function api(payload){
+  if(!API) return localApi(payload);
+  const r = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+  if(!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+function localApi(p){
+  const db = LS.get("mz_local_db", { rows: [] });
+  const pwOk = pw => !!pw && pw !== "change-me";
+  const key = (c, s) => String(c).trim() + "|" + normSeat(s);
+  if(p.action === "list"){
+    const rows = db.rows.filter(r => r.item === p.item);
+    if(pwOk(p.password)) return Promise.resolve({ ok:true, authed:true, local:true, rows });
+    return Promise.resolve({ ok:true, authed:false, local:true, pwError: !!p.password, rows: rows.map(r => ({ cls:r.cls, seat:r.seat, name:r.name, item:r.item, done: r.attempts.length > 0 })) });
+  }
+  if(p.action === "save"){
+    const k = key(p.student.cls, p.student.seat);
+    let r = db.rows.find(x => x.key === k && x.item === p.item);
+    if(!r){ r = { key:k, cls:String(p.student.cls).trim(), seat:normSeat(p.student.seat), name:p.student.name, item:p.item, attempts:[], rubric:null }; db.rows.push(r); }
+    r.name = p.student.name;
+    const isNew = !r.attempts.some(a => a.id === p.attempt.id);
+    if(isNew) r.attempts.push(p.attempt);
+    r.attempts.sort((a,b) => String(a.t).localeCompare(String(b.t)));
+    if(r.attempts.length > 20) r.attempts = [r.attempts[0]].concat(r.attempts.slice(-19));
+    r.best = Math.max(...r.attempts.map(a => a.score||0)); r.count = r.attempts.length; r.last = r.attempts[r.attempts.length-1].t;
+    LS.set("mz_local_db", db);
+    return Promise.resolve({ ok:true, saved:isNew });
+  }
+  if(p.action === "clearClass"){
+    if(!pwOk(p.password)) return Promise.resolve({ ok:false, error:"密碼錯誤" });
+    db.rows = db.rows.filter(r => !(r.cls === p.cls && r.item === p.item)); LS.set("mz_local_db", db);
+    return Promise.resolve({ ok:true });
+  }
+  if(p.action === "setRubric"){
+    if(!pwOk(p.password)) return Promise.resolve({ ok:false, error:"密碼錯誤" });
+    const r = db.rows.find(x => x.key === key(p.cls, p.seat) && x.item === p.item);
+    if(!r) return Promise.resolve({ ok:false, error:"找不到學生" });
+    r.rubric = (p.level === "" || p.level == null) ? null : { level:Number(p.level), note:p.note||"", at:new Date().toISOString() };
+    LS.set("mz_local_db", db);
+    return Promise.resolve({ ok:true, rubric:r.rubric });
+  }
+  return Promise.resolve({ ok:false, error:"unknown" });
+}
+
+/* ================= 診斷分析 ================= */
+const TYPES = [
+  { code:"A", level:0, color:"#b1412f", label:"找不到文本訊息", short:"擷取待加強",
+    desc:"第1～3題答對不到2題：還無法穩定找到人物、飲食習慣等明確訊息，容易把爸爸、媽媽、阿媽的吃法混在一起。",
+    game:"人物分類、文本訊息配對", how:"回到第3～5段，用三種顏色分別畫出「爸爸／阿媽／阿媽和媽媽共同」的吃粥習慣，再進行人物分類卡。" },
+  { code:"B", level:1, color:"#c56a24", label:"找得到訊息，但無法推論", short:"推論待加強",
+    desc:"能找到明確訊息，但還沒把「餵粥、吹涼」這些事件和人物的情感連起來，或只看到粥「好消化」的功能。",
+    game:"事件排序、「事件 → 感受」連連看", how:"把第6～8段排成「生病→爸媽吹涼餵粥→長大到荷蘭→生病仍想吃肉鬆稀飯」，每一步問「她心裡感覺到什麼？」" },
+  { code:"C", level:2, color:"#c58b2a", label:"能理解單一段落，但無法整合全文", short:"整合待加強",
+    desc:"能讀懂家庭故事，但不容易看出作者為什麼從家人寫到華人、《禮記》、陸游（從個人走向文化）。",
+    game:"段落功能配對（起承轉合）、文章結構圖", how:"給每段一張卡，讓學生放進「起／承／轉／合」，並說出「這一段把粥從＿＿帶到＿＿」。" },
+  { code:"D", level:3, color:"#3d9a8b", label:"能理解內容，但無法判斷證據與結論", short:"證據判斷待加強",
+    desc:"能理解內容與寫作安排，但會把陸游「一個人的例子」當成「一定能長壽」的證明，或用課外看法代替證據。",
+    game:"「證據夠不夠？」判斷卡", how:"出幾張「一個人的經驗 → 結論」卡片，判斷證據夠不夠；並找出第12段作者用問句保留判斷的地方。" },
+  { code:"E", level:4, color:"#2f7a4a", label:"起點穩定", short:"四層皆通過",
+    desc:"四個層次都達到門檻。",
+    game:"擔任小組小老師、挑戰開放題第三層", how:"請他在遊戲中擔任解說員，並挑戰說明「粥如何從個人療癒走到華人文化」。" }
+];
+const LEVEL_NAMES = ["第0層｜起步", "第1層｜能擷取", "第2層｜能推論", "第3層｜能詮釋整合", "第4層｜能比較評估"];
+const OPEN_NAMES = ["無法判定／未作答", "第一層｜內容辨認", "第二層｜感受連結", "第三層｜文本詮釋"];
+const LAYER_COLORS = ["", "var(--l1)", "var(--l2)", "var(--l3)", "var(--l4)"];
+const need = n => Math.ceil(n * 0.6);   // 3題要2題、2題要2題、1題要1題
+
+function classifyOpen(text){
+  const s = String(text || "").replace(/\s/g, "");
+  if(!s) return { level:0, reason:"未作答" };
+  const K = P.openKeywords, has = list => [...new Set(list.filter(w => s.includes(w)))];
+  const d = has(K.detail), m = has(K.meaning), p = has(K.personal);
+  if(m.length && (d.length || m.length >= 2))
+    return { level:3, reason:`提到文本細節「${(d.length ? d : m).slice(0,2).join("、")}」，並說出背後意涵「${m.slice(0,2).join("、")}」` };
+  if(p.length || m.length)
+    return { level:2, reason:`有說出自己的感受或生活連結「${p.concat(m).slice(0,2).join("、")}」` };
+  return { level:1, reason: d.length ? `能指出內容「${d.slice(0,2).join("、")}」，但還沒說明為什麼` : "能寫出印象深刻的部分，但還沒說明意義" };
+}
+
+function analyze(att, rubric, suspectSec){
+  const ans = att.ans || [];
+  const correct = Q.map((q,i) => ans[i] === q.answer);
+  const layers = P.layers.map(L => {
+    const idx = Q.map((q,i) => q.layer === L.id ? i : -1).filter(i => i >= 0);
+    const c = idx.filter(i => correct[i]).length;
+    return { id:L.id, name:L.name, short:L.short, n:idx.length, c, ok: c >= need(idx.length) };
+  });
+  let level = 0; for(const L of layers){ if(L.ok) level++; else break; }
+  const inconsistent = layers.some((L,i) => L.ok && i > level);
+  const tags = {};
+  Q.forEach((q,i) => { const a = ans[i]; if(a >= 0 && a !== q.answer){ const tg = q.options[a] && q.options[a].tag; if(tg){ (tags[tg] = tags[tg] || []).push(q.id); } } });
+  const unanswered = Q.filter((q,i) => !(ans[i] >= 0)).map(q => q.id);
+  const answered = ans.slice(0, Q.length).filter(x => x >= 0);
+  const sameAll = answered.length === Q.length && answered.every(x => x === answered[0]) && correct.some(c => !c);
+  const tooFast = (att.dur || 0) < (suspectSec || 90);
+  const auto = classifyOpen(att.openText);
+  const teacherSet = rubric && rubric.level != null;
+  const openLevel = teacherSet ? rubric.level : auto.level;
+  const type = TYPES[level];
+  const score = correct.filter(Boolean).length;
+
+  // 結構掌握（起承轉合）
+  const parts = {};
+  Q.forEach((q,i) => { const p = parts[q.part] = parts[q.part] || { n:0, c:0 }; p.n++; if(correct[i]) p.c++; });
+
+  // 答題特色
+  const feats = [];
+  const strengths = layers.filter(L => L.ok).map(L => L.name);
+  if(strengths.length) feats.push({ k:"good", t:`優勢：${strengths.join("、")}已達門檻。` });
+  Object.entries(tags).sort((a,b) => b[1].length - a[1].length).forEach(([tg, qs]) => {
+    const T = P.tags[tg]; if(T) feats.push({ k:"err", t:`${T.label}（第${qs.join("、")}題）：${T.feature}。` });
+  });
+  if(inconsistent) feats.push({ k:"warn", t:"基礎題答錯、較難的題目卻答對：可能是粗心、猜測或對某些選項的字面不熟，建議口頭追問一兩題。" });
+  if(unanswered.length) feats.push({ k:"warn", t:`第${unanswered.join("、")}題未作答。` });
+  if(openLevel >= 3 && level < 3) feats.push({ k:"good", t:"開放題能寫出親情或文化意涵，但選擇題的詮釋層未通過：可能是選項閱讀的問題，不一定是理解不足。" });
+  if(openLevel === 1 && level >= 3) feats.push({ k:"warn", t:"選擇題表現穩定，但開放題只停在指出內容：可以鼓勵他說出「為什麼」。" });
+  const len = String(att.openText || "").replace(/\s/g,"").length;
+  if(len > 0 && len <= 15 && openLevel >= 2) feats.push({ k:"good", t:`開放題雖然只寫 ${len} 個字，已經能說出感受或意涵（文字短≠理解差）。` });
+  if(tooFast) feats.push({ k:"warn", t:`用時 ${fmtDur(att.dur)}，比門檻短，可能沒有仔細讀題（只是提醒，請老師確認）。` });
+  if(sameAll) feats.push({ k:"warn", t:"8 題都選同一個選項，可能是隨意作答（只是提醒，請老師確認）。" });
+
+  return { correct, score, layers, level, type, inconsistent, tags, unanswered, sameAll, tooFast,
+    suspect: tooFast || sameAll, auto, openLevel, teacherSet, parts, feats };
+}
+
+/* ================= 學生端 ================= */
+let student = LS.get("mz_student", null);
+let quiz = null;  // { start, idx, ans[], openChoice, openOther, openText }
+const doneKey = () => student ? `mz_done_${ITEM}_${student.cls}_${student.seat}` : "";
+
+function renderWho(){
+  $("#whoBox").innerHTML = student ? `${esc(student.cls)} 班 ${esc(student.seat)} 號<br>${esc(student.name)}` : "";
+}
+function openReg(){
+  $("#rCls").value = student ? student.cls : ""; $("#rSeat").value = student ? student.seat : ""; $("#rName").value = student ? student.name : "";
+  $("#regMask").classList.remove("hidden");
+}
+$("#regOk").onclick = () => {
+  const cls = $("#rCls").value.trim(), seat = normSeat($("#rSeat").value), name = $("#rName").value.trim();
+  if(!cls || !seat || !name){ toast("請把班級、座號、姓名都填好"); return; }
+  student = { cls, seat, name }; LS.set("mz_student", student);
+  $("#regMask").classList.add("hidden"); renderWho(); showIntro();
+};
+$("#teacherSkip").onclick = () => { $("#regMask").classList.add("hidden"); };
+$("#changeMe").onclick = openReg;
+
+function showIntro(){
+  $("#introTitle").textContent = P.title; $("#introSub").textContent = P.subtitle;
+  ["#v-quiz","#v-done"].forEach(s => $(s).classList.add("hidden")); $("#v-intro").classList.remove("hidden");
+  $("#doneNotice").classList.toggle("hidden", !LS.get(doneKey(), null));
+  $("#pendingNotice").classList.toggle("hidden", !LS.get("mz_pending", null));
+  $("#startBtn").textContent = LS.get(doneKey(), null) ? "老師請我重做" : "開始作答";
+}
+$("#startBtn").onclick = () => {
+  if(!student){ openReg(); return; }
+  quiz = { start: new Date().toISOString(), t0: Date.now(), idx:0, ans: Q.map(() => -1), openChoice:"", openOther:"", openText:"" };
+  $("#v-intro").classList.add("hidden"); $("#v-quiz").classList.remove("hidden"); renderQ();
+};
+
+function renderQ(){
+  const total = Q.length + 1, i = quiz.idx;
+  $("#prog").innerHTML = Array.from({ length: total }, (_, k) => {
+    const done = k < Q.length ? quiz.ans[k] >= 0 : (quiz.openChoice && quiz.openText.trim());
+    return `<i class="${k === i ? "cur" : done ? "done" : ""}"></i>`;
+  }).join("");
+  let h = "";
+  if(i < Q.length){
+    const q = Q[i];
+    h += `<div class="qnum">第 ${i+1} 題／共 ${total} 題</div><div class="stem">${esc(q.stem)}</div>`;
+    q.options.forEach((o, k) => {
+      h += `<button class="opt ${quiz.ans[i] === k ? "sel" : ""}" data-k="${k}"><span class="k">${LETTER[k]}</span><span>${esc(o.t)}</span></button>`;
+    });
+  } else {
+    h += `<div class="qnum">第 ${total} 題／共 ${total} 題・寫寫看</div><div class="stem">${esc(OPEN.stem)}</div>`;
+    OPEN.choices.forEach(c => {
+      h += `<button class="opt ${quiz.openChoice === c.k ? "sel" : ""}" data-c="${c.k}"><span class="k">${c.k}</span><span>${esc(c.t)}</span></button>`;
+    });
+    h += `<div id="otherWrap" class="${quiz.openChoice === "E" ? "" : "hidden"}"><label class="f">${esc(OPEN.otherPrompt)}</label><input class="t" id="openOther" maxlength="60" value="${esc(quiz.openOther)}"></div>`;
+    h += `<label class="f">${esc(OPEN.prompt)}</label><textarea class="t" id="openText" maxlength="600" placeholder="${esc(OPEN.hint)}">${esc(quiz.openText)}</textarea>`;
+  }
+  $("#qcard").innerHTML = h;
+  $("#qcard").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { quiz.ans[i] = Number(b.dataset.k); renderQ(); });
+  $("#qcard").querySelectorAll("[data-c]").forEach(b => b.onclick = () => { quiz.openChoice = b.dataset.c; saveOpenInputs(); renderQ(); });
+  const ot = $("#openText"); if(ot) ot.oninput = () => { quiz.openText = ot.value; };
+  const oo = $("#openOther"); if(oo) oo.oninput = () => { quiz.openOther = oo.value; };
+  $("#prevBtn").disabled = i === 0;
+  $("#nextBtn").textContent = i === Q.length ? "送出 ✔" : "下一題 →";
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+function saveOpenInputs(){ const ot = $("#openText"), oo = $("#openOther"); if(ot) quiz.openText = ot.value; if(oo) quiz.openOther = oo.value; }
+$("#prevBtn").onclick = () => { saveOpenInputs(); if(quiz.idx > 0){ quiz.idx--; renderQ(); } };
+$("#nextBtn").onclick = () => {
+  saveOpenInputs();
+  if(quiz.idx < Q.length){ quiz.idx++; renderQ(); return; }
+  const miss = Q.filter((q,k) => quiz.ans[k] < 0).map(q => q.id);
+  let msg = "";
+  if(miss.length) msg += `<p>還有第 <b>${miss.join("、")}</b> 題沒有選答案。</p>`;
+  if(!quiz.openChoice) msg += `<p>第 9 題還沒選擇印象最深刻的部分。</p>`;
+  if(!quiz.openText.trim()) msg += `<p>第 9 題還沒寫下想法（寫一兩句就可以）。</p>`;
+  if(!msg) msg = "<p>送出後就不能再修改囉。</p>";
+  else msg += `<p class="small muted">可以按「再檢查一下」回去補完，也可以直接送出。</p>`;
+  $("#confirmMsg").innerHTML = msg; $("#confirmMask").classList.remove("hidden");
+};
+$("#confirmBack").onclick = () => {
+  $("#confirmMask").classList.add("hidden");
+  const miss = quiz.ans.findIndex(a => a < 0); quiz.idx = miss >= 0 ? miss : Q.length; renderQ();
+};
+$("#confirmGo").onclick = async () => {
+  $("#confirmMask").classList.add("hidden");
+  const now = new Date();
+  const att = {
+    id: quiz.start + "_" + Math.random().toString(36).slice(2, 7),
+    t: now.toISOString(), start: quiz.start, dur: Math.round((Date.now() - quiz.t0) / 1000),
+    ans: quiz.ans.slice(), openChoice: quiz.openChoice, openOther: quiz.openChoice === "E" ? quiz.openOther.trim() : "", openText: quiz.openText.trim()
+  };
+  att.score = Q.filter((q,k) => att.ans[k] === q.answer).length;
+  const A = analyze(att, null, CFG.suspectSeconds);
+  const payload = { action:"save", item:ITEM, student, attempt:att,
+    summary: { level: LEVEL_NAMES[A.level], type: A.type.code + " " + A.type.label, openAuto: OPEN_NAMES[A.auto.level], suspect: A.suspect } };
+  LS.set(doneKey(), att.t);
+  $("#v-quiz").classList.add("hidden"); $("#v-done").classList.remove("hidden");
+  await sendPayload(payload);
+};
+async function sendPayload(payload){
+  $("#codeBox").classList.add("hidden");
+  try{
+    const r = await api(payload);
+    if(!r || !r.ok) throw new Error((r && r.error) || "save failed");
+    LS.del("mz_pending");
+  }catch(e){
+    LS.set("mz_pending", payload);
+    $("#codeText").value = "MZ1:" + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    $("#codeBox").classList.remove("hidden");
+  }
+}
+$("#copyCode").onclick = () => copyText($("#codeText").value);
+$("#retrySend").onclick = async () => { const p = LS.get("mz_pending", null); if(p){ await sendPayload(p); if(!LS.get("mz_pending", null)) toast("送出成功！"); } };
+$("#retryPending").onclick = async () => { const p = LS.get("mz_pending", null); if(!p) return; try{ const r = await api(p); if(r && r.ok){ LS.del("mz_pending"); toast("送出成功！"); showIntro(); } else toast("還是送不出去，請稍後再試"); }catch(e){ toast("還是送不出去，請稍後再試"); } };
+
+/* ================= 成績頁／教師端 ================= */
+let DATA = { rows:[], authed:false };
+let curCls = LS.get("mz_cls_sel", "");
+let curTab = "overview";
+let attemptMode = CFG.analyzeAttempt === "latest" ? "latest" : "first";
+let suspectSec = Number(LS.get("mz_suspect_sec", CFG.suspectSeconds || 90)) || 90;
+let recFilter = { seat:"", onlySus:false };
+
+async function loadScores(){
+  const pw = SS.get("mz_pw");
+  $("#publicList").innerHTML = `<p class="muted">讀取中…</p>`;
+  try{
+    const r = await api({ action:"list", item:ITEM, password: pw || undefined });
+    if(!r.ok) throw new Error(r.error || "讀取失敗");
+    if(pw && !r.authed){ SS.del("mz_pw"); toast("密碼錯誤（若後端密碼仍是 change-me，請先修改）"); }
+    DATA = r;
+  }catch(e){
+    $("#publicList").innerHTML = `<p class="c-bad">讀取失敗：${esc(e.message)}。請確認 config.js 的網址，或稍後再試。</p>`;
+    return;
+  }
+  const note = API ? "" : "（目前是本機模式：資料只存在這台裝置。設定 config.js 後才會連到 Google 試算表）";
+  $("#modeNote").textContent = note; $("#modeNote2").textContent = note;
+  $("#loginRow").classList.toggle("hidden", DATA.authed); $("#logoutRow").classList.toggle("hidden", !DATA.authed);
+  const classes = [...new Set(DATA.rows.map(r => r.cls))].sort();
+  if(!classes.includes(curCls)) curCls = classes[0] || "";
+  $("#clsSel").innerHTML = classes.length ? classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("") : `<option value="">（尚無資料）</option>`;
+  renderPublic(); renderTeacher();
+}
+$("#clsSel").onchange = e => { curCls = e.target.value; LS.set("mz_cls_sel", curCls); renderPublic(); renderTeacher(); };
+$("#reloadBtn").onclick = loadScores;
+$("#loginBtn").onclick = () => { const pw = $("#pwInput").value; if(!pw) return; SS.set("mz_pw", pw); $("#pwInput").value = ""; loadScores(); };
+$("#pwInput").onkeydown = e => { if(e.key === "Enter") $("#loginBtn").click(); };
+$("#logoutBtn").onclick = () => { SS.del("mz_pw"); loadScores(); };
+$("#screenBtn").onclick = () => { location.hash = "#screen"; };
+
+const classRows = () => DATA.rows.filter(r => r.cls === curCls).sort((a,b) => Number(a.seat) - Number(b.seat));
+const pick = r => { const a = r.attempts || []; return a.length ? (attemptMode === "latest" ? a[a.length-1] : a[0]) : null; };
+
+function renderPublic(){
+  const rows = classRows();
+  const done = rows.filter(r => DATA.authed ? (r.attempts||[]).length : r.done);
+  let h = `<h3 style="margin-top:0">${esc(curCls || "")} 班　已完成 ${done.length} 人</h3>`;
+  if(!rows.length){ h += `<p class="muted">還沒有人完成。</p>`; }
+  else h += `<div class="row">` + done.map(r => `<span class="pill" style="font-size:14px">${esc(r.seat)} ${esc(r.name)} ✓</span>`).join("") + `</div>`;
+  h += `<p class="small muted" style="margin-bottom:0">這是診斷用的小檢查，不排名、不公布分數。</p>`;
+  $("#publicList").innerHTML = h;
+}
+
+const TABS = [
+  ["overview","全班概況"],["items","各題分析"],["students","學生診斷"],["open","開放題分類"],
+  ["records","作答紀錄"],["guide","前測結果解讀表"],["tools","教師區"]
+];
+function renderTeacher(){
+  $("#teacherArea").classList.toggle("hidden", !DATA.authed);
+  if(!DATA.authed) return;
+  $("#tabs").innerHTML = TABS.map(([k,l]) => `<button class="${k === curTab ? "on" : ""}" data-t="${k}">${l}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach(b => b.onclick = () => { curTab = b.dataset.t; renderTeacher(); });
+  const fn = { overview:tabOverview, items:tabItems, students:tabStudents, open:tabOpen, records:tabRecords, guide:tabGuide, tools:tabTools }[curTab];
+  $("#tabBody").innerHTML = ""; fn($("#tabBody"));
+}
+function analyzedClass(){
+  return classRows().map(r => { const a = pick(r); return a ? { r, a, A: analyze(a, r.rubric, suspectSec) } : null; }).filter(Boolean);
+}
+function modeSwitch(){
+  return `<div class="row small" style="margin:4px 0 10px"><span class="muted">分析依據：</span>
+    <label><input type="radio" name="am" value="first" ${attemptMode==="first"?"checked":""}> 每人第一次作答（建議，最能反映起點）</label>
+    <label><input type="radio" name="am" value="latest" ${attemptMode==="latest"?"checked":""}> 每人最新一次</label></div>`;
+}
+function bindMode(el){ el.querySelectorAll('input[name="am"]').forEach(x => x.onchange = () => { attemptMode = x.value; renderTeacher(); }); }
+function pct(a, b){ return b ? Math.round(a * 100 / b) : 0; }
+
+/* ---- 全班概況 ---- */
+function tabOverview(el){
+  const S = analyzedClass(), n = S.length;
+  let h = modeSwitch();
+  if(!n){ el.innerHTML = h + `<div class="card">這個班還沒有作答資料。</div>`; bindMode(el); return; }
+  const avg = (S.reduce((s,x) => s + x.A.score, 0) / n).toFixed(1);
+  const sus = S.filter(x => x.A.suspect).length;
+  const lvCount = [0,0,0,0,0]; S.forEach(x => lvCount[x.A.level]++);
+  const weakest = P.layers.map(L => ({ L, rate: pct(S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), n * x0(L.id)) })).sort((a,b) => a.rate - b.rate)[0];
+  h += `<div class="grid g4">
+    <div class="stat"><div class="n">${n}</div><div class="l">已完成人數</div></div>
+    <div class="stat"><div class="n">${avg}<span class="small"> / 8</span></div><div class="l">選擇題平均答對（僅供參考）</div></div>
+    <div class="stat"><div class="n">${esc(weakest.L.name)}</div><div class="l">全班答對率最低的層次（${weakest.rate}%）</div></div>
+    <div class="stat"><div class="n">${sus}</div><div class="l">疑似亂答（請確認）</div></div></div>`;
+  h += `<div class="card"><h3 style="margin-top:0">各閱讀層次答對率</h3>`;
+  P.layers.forEach(L => {
+    const c = S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), tot = n * x0(L.id), pass = S.filter(x => x.A.layers[L.id-1].ok).length;
+    h += `<div class="hrow"><div><span class="pill L${L.id}">第${L.id}層</span> ${esc(L.short)}</div><div class="bar"><b style="width:${pct(c,tot)}%;background:${LAYER_COLORS[L.id]}"></b></div><div><b>${pct(c,tot)}%</b></div></div>
+      <div class="small muted" style="margin:-4px 0 6px 130px">達門檻 ${pass}/${n} 人・${esc(L.goal)}</div>`;
+  });
+  h += `</div><div class="card"><h3 style="margin-top:0">全班閱讀層級分布（選擇題）</h3>`;
+  TYPES.forEach(T => {
+    const c = lvCount[T.level];
+    h += `<div class="hrow"><div><b>${LEVEL_NAMES[T.level].split("｜")[0]}</b></div><div class="bar"><b style="width:${pct(c,n)}%;background:${T.color}"></b></div><div><b>${c}</b> 人</div></div>
+      <div class="small muted" style="margin:-4px 0 6px 130px">${T.code}｜${esc(T.label)}</div>`;
+  });
+  const oc = [0,0,0,0]; S.forEach(x => oc[x.A.openLevel]++);
+  h += `</div><div class="card"><h3 style="margin-top:0">開放題層次分布</h3>`;
+  [3,2,1,0].forEach(l => { h += `<div class="hrow"><div>${OPEN_NAMES[l].split("｜")[0]}</div><div class="bar"><b style="width:${pct(oc[l],n)}%;background:${["#aaa","var(--l1)","var(--l2)","var(--l3)"][l]}"></b></div><div><b>${oc[l]}</b> 人</div></div>`; });
+  h += `<p class="small muted">含系統初判與老師修改後的結果。系統初判只是起點，請到「開放題分類」確認。</p></div>`;
+  // 結構
+  h += `<div class="card"><h3 style="margin-top:0">文章結構掌握（起承轉合）</h3>`;
+  P.structure.forEach(s => {
+    const items = Q.filter(q => q.part === s.part);
+    if(!items.length){ h += `<div class="small muted">【${s.part}】${esc(s.paras)}：前測未直接出題（${esc(s.focus)}）</div>`; return; }
+    const c = S.reduce((t,x) => t + (x.A.parts[s.part] ? x.A.parts[s.part].c : 0), 0), tot = n * items.length;
+    h += `<div class="hrow"><div><b>【${s.part}】</b>${esc(s.paras)}</div><div class="bar"><b style="width:${pct(c,tot)}%;background:var(--accent)"></b></div><div><b>${pct(c,tot)}%</b></div></div>
+      <div class="small muted" style="margin:-4px 0 6px 130px">${esc(s.focus)}（第${items.map(q=>q.id).join("、")}題）</div>`;
+  });
+  h += `</div>` + suggestBox(S);
+  el.innerHTML = h; bindMode(el);
+}
+function x0(layerId){ return Q.filter(q => q.layer === layerId).length; }
+function suggestBox(S){
+  const n = S.length; if(!n) return "";
+  const lvCount = [0,0,0,0,0]; S.forEach(x => lvCount[x.A.level]++);
+  const tagCount = {}; S.forEach(x => Object.entries(x.A.tags).forEach(([t,qs]) => tagCount[t] = (tagCount[t]||0) + qs.length));
+  const topTags = Object.entries(tagCount).sort((a,b) => b[1]-a[1]).slice(0,3);
+  let h = `<div class="card"><h3 style="margin-top:0">💡 下一節課的建議</h3>`;
+  const main = TYPES.filter(T => T.level < 4).map(T => ({ T, c: lvCount[T.level] })).sort((a,b) => b.c - a.c)[0];
+  if(main && main.c) h += `<div class="typebox" style="border-color:${main.T.color}"><b>人數最多：${main.T.code}｜${esc(main.T.label)}（${main.c} 人）</b><br>建議加強遊戲：<b>${esc(main.T.game)}</b><br><span class="small">${esc(main.T.how)}</span></div>`;
+  if(topTags.length) h += `<p><b>全班最常見的錯誤類型：</b></p><ul class="feat">` + topTags.map(([t,c]) => `<li><b>${esc(P.tags[t].label)}</b>（共 ${c} 次）：${esc(P.tags[t].feature)} → 可用「${esc(P.tags[t].game)}」</li>`).join("") + `</ul>`;
+  h += `<p class="small muted">分組建議：同一診斷類型的學生可放在同一組做對應的鷹架遊戲；E 類學生可分散到各組當小老師。</p></div>`;
+  return h;
+}
+
+/* ---- 各題分析 ---- */
+function tabItems(el){
+  const S = analyzedClass(), n = S.length;
+  let h = modeSwitch();
+  if(!n){ el.innerHTML = h + `<div class="card">尚無資料。</div>`; bindMode(el); return; }
+  Q.forEach((q,i) => {
+    const cnt = [0,0,0,0], blank = S.filter(x => !(x.a.ans[i] >= 0)).length;
+    S.forEach(x => { const a = x.a.ans[i]; if(a >= 0 && a < 4) cnt[a]++; });
+    const rate = pct(cnt[q.answer], n);
+    let wrongTop = -1; cnt.forEach((c,k) => { if(k !== q.answer && c > 0 && (wrongTop < 0 || c > cnt[wrongTop])) wrongTop = k; });
+    h += `<div class="card"><div class="row"><span class="pill L${q.layer}">第${q.layer}層 ${esc(P.layers[q.layer-1].short)}</span><span class="pill">【${q.part}】${esc(q.para)}</span><span class="spacer"></span><b class="${rate >= 60 ? "c-ok" : "c-bad"}">答對率 ${rate}%</b></div>
+      <h3 style="margin:8px 0 2px">第 ${q.id} 題　${esc(q.stem)}</h3><div class="small muted">${esc(q.ability)}</div>`;
+    q.options.forEach((o,k) => {
+      const isA = k === q.answer;
+      h += `<div class="optline"><b class="${isA ? "c-ok" : ""}">${LETTER[k]}${isA ? "✓" : ""}</b><div><div>${esc(o.t)}${o.tag ? `<span class="tag">${esc(P.tags[o.tag].label)}</span>` : ""}</div><div class="bar" style="margin-top:3px"><b style="width:${pct(cnt[k],n)}%;background:${isA ? "var(--ok)" : "#d39a86"}"></b></div></div><div><b>${cnt[k]}</b> 人</div><div class="why">${esc(o.why)}</div></div>`;
+    });
+    if(blank) h += `<div class="small muted">未作答 ${blank} 人</div>`;
+    if(wrongTop >= 0 && cnt[wrongTop] >= Math.max(2, n * 0.2)) {
+      const o = q.options[wrongTop];
+      h += `<div class="banner" style="margin-top:8px">最多人誤選 <b>${LETTER[wrongTop]}</b>（${cnt[wrongTop]} 人）：${esc(o.why)}${o.tag ? `。建議用「${esc(P.tags[o.tag].game)}」處理。` : ""}</div>`;
+    }
+    h += `</div>`;
+  });
+  el.innerHTML = h; bindMode(el);
+}
+
+/* ---- 學生診斷 ---- */
+function tabStudents(el){
+  const S = analyzedClass();
+  let h = modeSwitch() + `<div class="row small" style="margin-bottom:8px"><span class="muted">點每位學生可展開：答題特色、各層表現、開放題原文與老師判定。</span><span class="spacer"></span><button class="btn sm" id="csvBtn">⬇ 匯出診斷表（Excel 可開）</button></div>`;
+  if(!S.length){ el.innerHTML = h + `<div class="card">尚無資料。</div>`; bindMode(el); return; }
+  S.forEach(({ r, a, A }) => {
+    const T = A.type;
+    h += `<details class="stu"><summary>
+      <b style="min-width:58px">${esc(r.seat)} 號</b><b>${esc(r.name)}</b>
+      <span class="lvbadge" style="background:${T.color}">${LEVEL_NAMES[A.level]}</span>
+      <span class="pill">${T.code}｜${esc(T.label)}</span>
+      <span class="small muted">開放題：${OPEN_NAMES[A.openLevel].split("｜").pop()}${A.teacherSet ? "（老師判定）" : "（初判）"}</span>
+      ${A.inconsistent ? `<span class="tag" style="background:var(--warn-soft);color:var(--warn)">不連續</span>` : ""}
+      ${A.suspect ? `<span class="tag" style="background:var(--warn-soft);color:var(--warn)">疑似亂答</span>` : ""}
+      <span class="spacer"></span><span class="small muted">${A.score}/8・${fmtDur(a.dur)}</span></summary><div class="body">`;
+    h += `<div class="row" style="margin:4px 0 8px">` + A.layers.map(L => `<span class="pill L${L.id}">${esc(L.short)} ${L.c}/${L.n} ${L.ok ? "✓" : "✗"}</span>`).join("") + `</div>`;
+    h += `<div class="small">各題：` + Q.map((q,i) => { const x = a.ans[i]; return `<span class="${A.correct[i] ? "c-ok" : "c-bad"}">${q.id}${x >= 0 ? LETTER[x] : "－"}</span>`; }).join("　") + `</div>`;
+    h += `<h3>答題特色</h3><ul class="feat">` + A.feats.map(f => `<li class="${f.k === "err" ? "c-bad" : f.k === "good" ? "c-ok" : ""}" style="font-weight:400">${esc(f.t)}</li>`).join("") + `</ul>`;
+    h += `<div class="typebox" style="border-color:${T.color}"><b>${T.code}｜${esc(T.label)}</b>：${esc(T.desc)}<br>建議遊戲：<b>${esc(T.game)}</b></div>`;
+    const ch = OPEN.choices.find(c => c.k === a.openChoice);
+    h += `<h3>第 9 題</h3><div class="small">選擇：<b>${esc(a.openChoice || "未選")}</b> ${ch ? esc(ch.t) : ""}${a.openOther ? `（${esc(a.openOther)}）` : ""}</div>
+      <div class="quote">${esc(a.openText || "（未作答）")}</div>
+      <div class="small muted">系統初判：${OPEN_NAMES[A.auto.level]}　理由：${esc(A.auto.reason)}</div>
+      <div class="row" style="margin-top:6px"><span class="small"><b>老師判定</b></span>
+        <select class="t rub" style="width:auto" data-seat="${esc(r.seat)}">
+          <option value="">使用系統初判</option>
+          ${[3,2,1,0].map(l => `<option value="${l}" ${A.teacherSet && r.rubric.level === l ? "selected" : ""}>${OPEN_NAMES[l]}</option>`).join("")}
+        </select>
+        <input class="t rubnote" placeholder="備註（可不填）" style="flex:1;min-width:140px" value="${esc(r.rubric && r.rubric.note || "")}" data-seat="${esc(r.seat)}">
+        <button class="btn sm dark rubsave" data-seat="${esc(r.seat)}">儲存</button></div>`;
+    if((r.attempts||[]).length > 1) h += `<p class="small muted">共作答 ${r.attempts.length} 次：` + r.attempts.map(x => `${fmtTime(x.t)}（${x.score}/8）`).join("、") + `</p>`;
+    h += `</div></details>`;
+  });
+  el.innerHTML = h; bindMode(el);
+  el.querySelectorAll(".rubsave").forEach(b => b.onclick = async () => {
+    const seat = b.dataset.seat;
+    const sel = el.querySelector(`.rub[data-seat="${seat}"]`), note = el.querySelector(`.rubnote[data-seat="${seat}"]`);
+    b.disabled = true;
+    try{
+      const r = await api({ action:"setRubric", password:SS.get("mz_pw"), item:ITEM, cls:curCls, seat, level: sel.value, note: note.value });
+      if(!r.ok) throw new Error(r.error);
+      const row = DATA.rows.find(x => x.cls === curCls && x.seat === seat); if(row) row.rubric = r.rubric;
+      toast("已儲存老師判定"); renderTeacher();
+    }catch(e){ toast("儲存失敗：" + e.message); b.disabled = false; }
+  });
+  $("#csvBtn").onclick = () => exportCSV(S);
+}
+function exportCSV(S){
+  const head = ["班級","座號","姓名","完成時間","用時(秒)","選擇題答對","擷取","推論","詮釋","評估","閱讀層級","診斷類型","Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","第9題選項","第9題文字","開放題層次","判定來源","答題特色","疑似亂答"];
+  const lines = [head];
+  S.forEach(({ r, a, A }) => lines.push([r.cls, r.seat, r.name, fmtTime(a.t), a.dur, A.score,
+    ...A.layers.map(L => `${L.c}/${L.n}`), LEVEL_NAMES[A.level], A.type.code + " " + A.type.label,
+    ...Q.map((q,i) => (a.ans[i] >= 0 ? LETTER[a.ans[i]] : "") + (A.correct[i] ? "✓" : "✗")),
+    a.openChoice + (a.openOther ? "：" + a.openOther : ""), a.openText, OPEN_NAMES[A.openLevel], A.teacherSet ? "老師" : "系統初判",
+    A.feats.map(f => f.t).join(" / "), A.suspect ? "是" : ""]));
+  const csv = "﻿" + lines.map(l => l.map(v => `"${String(v == null ? "" : v).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  const url = URL.createObjectURL(new Blob([csv], { type:"text/csv;charset=utf-8" }));
+  const aEl = document.createElement("a"); aEl.href = url; aEl.download = `以粥養生前測診斷_${curCls}.csv`; document.body.appendChild(aEl); aEl.click(); aEl.remove();
+}
+
+/* ---- 開放題分類 ---- */
+function tabOpen(el){
+  const S = analyzedClass();
+  let h = modeSwitch() + `<div class="card small">
+    <b>評分規準</b>（文字短不代表理解差，請看內容）<br>
+    <b>第一層 內容辨認</b>：能指出印象深刻的內容，但尚未說明意義。<br>
+    <b>第二層 感受連結</b>：能說明自己為什麼有感受，能連結自身生活經驗或個人感受。<br>
+    <b>第三層 文本詮釋</b>：能引用或指出具體文本細節，並說明背後的親情、生活記憶或文化意涵。<br>
+    <span class="muted">系統依關鍵詞先初判，老師可在「學生診斷」裡改判。</span></div>`;
+  const choiceCount = {}; S.forEach(x => choiceCount[x.a.openChoice || "—"] = (choiceCount[x.a.openChoice || "—"] || 0) + 1);
+  h += `<div class="card"><h3 style="margin-top:0">大家印象最深刻的部分</h3>` + OPEN.choices.map(c => `<div class="hrow"><div><b>${c.k}</b></div><div><div class="small">${esc(c.t)}</div><div class="bar"><b style="width:${pct(choiceCount[c.k]||0,S.length)}%;background:var(--accent)"></b></div></div><div><b>${choiceCount[c.k]||0}</b> 人</div></div>`).join("") + `</div>`;
+  [3,2,1,0].forEach(l => {
+    const g = S.filter(x => x.A.openLevel === l);
+    h += `<div class="card"><h3 style="margin-top:0">${OPEN_NAMES[l]}（${g.length} 人）</h3>`;
+    if(!g.length) h += `<p class="muted small">無</p>`;
+    g.forEach(({ r, a, A }) => { h += `<div class="quote"><b>${esc(r.seat)} ${esc(r.name)}</b>　<span class="pill">${esc(a.openChoice)}</span>${A.teacherSet ? ` <span class="pill L4">老師判定</span>` : ""}\n${esc(a.openText || "（未作答）")}</div>`; });
+    h += `</div>`;
+  });
+  el.innerHTML = h; bindMode(el);
+}
+
+/* ---- 作答紀錄 ---- */
+function tabRecords(el){
+  const all = [];
+  classRows().forEach(r => (r.attempts || []).forEach((a, k) => all.push({ r, a, k, A: analyze(a, r.rubric, suspectSec) })));
+  all.sort((x,y) => String(y.a.t).localeCompare(String(x.a.t)));
+  const list = all.filter(x => (!recFilter.seat || x.r.seat === normSeat(recFilter.seat)) && (!recFilter.onlySus || x.A.suspect));
+  let h = `<div class="card"><div class="row">
+      <input class="t" id="fSeat" placeholder="篩選座號" style="width:120px" value="${esc(recFilter.seat)}">
+      <label class="small"><input type="checkbox" id="fSus" ${recFilter.onlySus ? "checked" : ""}> 只看疑似亂答</label>
+      <label class="small">用時門檻 <input class="t" id="fSec" type="number" min="0" style="width:80px;display:inline-block" value="${suspectSec}"> 秒</label>
+      <span class="spacer"></span><button class="btn sm" id="copyTsv">📋 複製表格（可貼到 Excel）</button></div>
+    <p class="small muted" style="margin:6px 0 0">疑似亂答：用時少於門檻，或 8 題都選同一個選項且未全對。<b>只是提醒，請老師確認。</b></p></div>`;
+  const head = ["完成時間","座號","姓名","第幾次","用時","答對","Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","第9題","閱讀層級","疑似亂答"];
+  h += `<div class="scroll"><table class="tb"><thead><tr>${head.map(x => `<th>${x}</th>`).join("")}</tr></thead><tbody>`;
+  list.forEach(({ r, a, k, A }) => {
+    h += `<tr class="${A.suspect ? "sus" : ""}"><td>${fmtTime(a.t)}</td><td>${esc(r.seat)}</td><td>${esc(r.name)}</td><td>${k+1}</td><td>${fmtDur(a.dur)}</td><td>${A.score}</td>` +
+      Q.map((q,i) => `<td class="${A.correct[i] ? "c-ok" : "c-bad"}">${a.ans[i] >= 0 ? LETTER[a.ans[i]] : "－"}</td>`).join("") +
+      `<td>${esc(a.openChoice)}</td><td>${LEVEL_NAMES[A.level].split("｜")[0]}</td><td>${A.suspect ? "⚠️" : ""}</td></tr>`;
+  });
+  h += `</tbody></table></div>`;
+  if(!list.length) h += `<p class="muted">沒有符合的紀錄。</p>`;
+  el.innerHTML = h;
+  $("#fSeat").oninput = e => { recFilter.seat = e.target.value; clearTimeout(window._fs); window._fs = setTimeout(() => { renderTeacher(); const f = $("#fSeat"); if(f){ f.focus(); f.setSelectionRange(f.value.length, f.value.length); } }, 400); };
+  $("#fSus").onchange = e => { recFilter.onlySus = e.target.checked; renderTeacher(); };
+  $("#fSec").onchange = e => { suspectSec = Math.max(0, Number(e.target.value) || 0); LS.set("mz_suspect_sec", suspectSec); renderTeacher(); };
+  $("#copyTsv").onclick = () => {
+    const rows = [head.concat(["第9題文字"])].concat(list.map(({ r, a, k, A }) => [fmtTime(a.t), r.seat, r.name, k+1, a.dur, A.score, ...Q.map((q,i) => a.ans[i] >= 0 ? LETTER[a.ans[i]] : ""), a.openChoice, LEVEL_NAMES[A.level], A.suspect ? "是" : "", String(a.openText || "").replace(/[\t\n\r]+/g, " ")]));
+    copyText(rows.map(x => x.join("\t")).join("\n"));
+  };
+}
+
+/* ---- 解讀表 ---- */
+function tabGuide(el){
+  let h = `<div class="card"><h3 style="margin-top:0">前測結果解讀表</h3>
+    <p class="small muted">判定方式：由第1層往上檢查，每層答對達門檻（擷取 2/3、推論 2/2、詮釋 2/2、評估 1/1）才算通過，停在第一個沒通過的層次。<b>不用總分判斷</b>：兩位都答對 5 題的學生，可能一位是 B 類、一位是 D 類。</p>
+    <div class="scroll" style="max-height:none"><table class="tb"><thead><tr><th>類型</th><th>判斷依據</th><th>學生的樣子</th><th>建議加強的課堂遊戲</th><th>老師可以怎麼做</th></tr></thead><tbody>`;
+  const basis = ["第1～3題答對 &lt; 2 題","第1層通過，第4～5題未全對","第1～2層通過，第6～7題未全對","第1～3層通過，第8題答錯","四層皆通過"];
+  TYPES.forEach((T,i) => { h += `<tr><td><span class="lvbadge" style="background:${T.color}">${T.code}</span><br><b>${esc(T.label)}</b><br><span class="small muted">${LEVEL_NAMES[T.level]}</span></td><td>${basis[i]}</td><td>${esc(T.desc)}</td><td><b>${esc(T.game)}</b></td><td>${esc(T.how)}</td></tr>`; });
+  h += `</tbody></table></div></div>`;
+  h += `<div class="card"><h3 style="margin-top:0">依錯誤選項看「答題特色」</h3><div class="scroll" style="max-height:none"><table class="tb"><thead><tr><th>錯誤類型</th><th>代表什麼</th><th>出現在哪些題目的選項</th><th>對應遊戲</th></tr></thead><tbody>`;
+  Object.entries(P.tags).forEach(([k,T]) => {
+    const where = []; Q.forEach(q => q.options.forEach((o,j) => { if(o.tag === k) where.push(`${q.id}${LETTER[j]}`); }));
+    h += `<tr><td><b>${esc(T.label)}</b></td><td>${esc(T.feature)}</td><td>${where.join("、")}</td><td>${esc(T.game)}</td></tr>`;
+  });
+  h += `</tbody></table></div></div>`;
+  h += `<div class="card"><h3 style="margin-top:0">特殊情形</h3><ul class="feat">
+    <li><b>不連續</b>（低層錯、高層對）：可能粗心、猜測，或對某些選項字面不熟。先口頭問一兩題再分組。</li>
+    <li><b>開放題第三層，但選擇題詮釋未過</b>：能說出意涵，可能是選項閱讀的問題，不要直接歸為理解不足。</li>
+    <li><b>第8題選 D</b>（結論對、理由錯）：知道「不能證明」，但理由來自課外看法，仍屬證據判斷待加強。</li>
+    <li><b>疑似亂答</b>：用時過短或全選同一個選項。只是提醒，建議個別再做一次或口頭確認。</li></ul></div>`;
+  h += `<div class="card"><h3 style="margin-top:0">文章結構（起承轉合）與題目對照</h3><table class="tb"><thead><tr><th>結構</th><th>段落</th><th>核心焦點</th><th>對應題目</th></tr></thead><tbody>` +
+    P.structure.map(s => `<tr><td><b>【${s.part}】</b></td><td>${esc(s.paras)}</td><td>${esc(s.focus)}<br><span class="small muted">${esc(s.point)}</span></td><td>${Q.filter(q => q.part === s.part).map(q => q.id).join("、") || "第9題可能選到"}</td></tr>`).join("") + `</tbody></table></div>`;
+  h += `<div class="card"><h3 style="margin-top:0">題目、答案與解析（老師專用）</h3>` + Q.map(q => `<div style="margin:10px 0"><b>${q.id}.</b> ${esc(q.stem)} <span class="pill L${q.layer}">${esc(P.layers[q.layer-1].short)}</span> <span class="small muted">${esc(q.para)}</span><br>` +
+    q.options.map((o,k) => `<span class="${k === q.answer ? "c-ok" : ""}">（${LETTER[k]}）${esc(o.t)}</span>`).join("<br>") + `<br><span class="small muted">答案 ${LETTER[q.answer]}｜${esc(q.options[q.answer].why)}</span></div>`).join("") + `</div>`;
+  el.innerHTML = h;
+}
+
+/* ---- 教師區 ---- */
+function tabTools(el){
+  el.innerHTML = `<div class="card"><h3 style="margin-top:0">匯入學生的成績碼</h3>
+    <p class="small muted">學生網路斷線時，交卷畫面會出現一段以 MZ1: 開頭的代碼。貼在下面（可一次貼多段，每段一行）。</p>
+    <textarea class="t" id="impText" placeholder="MZ1:..."></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn dark" id="impBtn">匯入</button></div></div>
+    <div class="card"><h3 style="margin-top:0">大屏展示</h3><p class="small muted">投影用：只顯示完成人數、座號、各層答對率、層級分布，不顯示個人分數或疑似亂答。每 15 秒自動更新。</p><button class="btn" id="scr2">🖥️ 開啟大屏</button></div>
+    <div class="card"><h3 style="margin-top:0">清除本班資料</h3><p class="small muted">會刪除「${esc(curCls)}」班這份前測的全部資料（試算表兩個工作表都會刪），無法復原。</p><button class="btn danger" id="clrBtn">清除 ${esc(curCls)} 班資料</button></div>`;
+  $("#scr2").onclick = () => { location.hash = "#screen"; };
+  $("#impBtn").onclick = async () => {
+    const codes = $("#impText").value.split(/\s+/).filter(s => s.startsWith("MZ1:"));
+    let ok = 0, bad = 0;
+    for(const c of codes){
+      try{ const p = JSON.parse(decodeURIComponent(escape(atob(c.slice(4))))); if(p.action !== "save") throw 0; const r = await api(p); if(r.ok) ok++; else bad++; }catch(e){ bad++; }
+    }
+    toast(`匯入成功 ${ok} 筆${bad ? `，失敗 ${bad} 筆` : ""}`); $("#impText").value = ""; loadScores();
+  };
+  $("#clrBtn").onclick = async () => {
+    if(!curCls) return;
+    if(!confirm(`確定要清除 ${curCls} 班的全部前測資料嗎？這個動作無法復原。`)) return;
+    const r = await api({ action:"clearClass", password:SS.get("mz_pw"), item:ITEM, cls:curCls });
+    toast(r.ok ? "已清除" : "清除失敗：" + r.error); loadScores();
+  };
+}
+
+/* ================= 大屏 ================= */
+let screenTimer = null;
+async function renderScreen(){
+  const el = $("#pg-screen");
+  const pw = SS.get("mz_pw");
+  if(!pw){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>大屏需要老師登入</h3><p>請先到 <a href="#scores" style="color:#ffd9a8">成績頁</a> 登入，再按「開啟大屏展示」。</p></div>`; return; }
+  let r;
+  try{ r = await api({ action:"list", item:ITEM, password:pw }); }catch(e){ return; }
+  if(!r.ok || !r.authed){ el.innerHTML = `<div class="sc-box" style="max-width:600px;margin:10vh auto"><h3>登入已失效</h3><p><a href="#scores" style="color:#ffd9a8">回成績頁重新登入</a></p></div>`; return; }
+  DATA = r;
+  const classes = [...new Set(r.rows.map(x => x.cls))].sort(); if(!classes.includes(curCls)) curCls = classes[0] || "";
+  const S = analyzedClass(), n = S.length;
+  const maxSeat = Math.max(30, ...classRows().map(x => Number(x.seat) || 0));
+  const doneSeats = new Set(S.map(x => x.r.seat));
+  const lv = [0,0,0,0,0]; S.forEach(x => lv[x.A.level]++);
+  el.innerHTML = `<div class="row"><div><p class="sc-title">🍚 〈以粥養生〉初讀小檢查</p><div class="sc-sub">${esc(curCls)} 班・每 15 秒自動更新</div></div><span class="spacer"></span>
+      <select id="scCls">${classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
+      <a href="#scores" style="color:#ffd9a8;font-size:1.4vw;margin-left:1vw">離開</a></div>
+    <div class="sc-grid">
+      <div class="sc-box"><h3>已完成</h3><div class="sc-big">${n}<span style="font-size:3vw"> 人</span></div>
+        <div class="seats">${Array.from({ length:maxSeat }, (_,i) => `<div class="${doneSeats.has(String(i+1)) ? "on" : ""}">${i+1}</div>`).join("")}</div></div>
+      <div class="sc-box"><h3>全班各層次答對率</h3>
+        ${P.layers.map(L => { const c = S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), tot = n * x0(L.id), p = pct(c,tot);
+          return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#7aa7d6","#6cc3b4","#e6b45a","#cf86a8"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
+        <h3 style="margin-top:2vh">閱讀層級分布</h3>
+        ${[0,1,2,3,4].map(l => `<div class="sc-row" style="font-size:min(1.6vw,2.8vh);margin:.6vh 0"><div>第${l}層</div><div class="sc-bar"><b style="width:${pct(lv[l],n)}%;background:${TYPES[l].color}"></b></div><div>${lv[l]}人</div></div>`).join("")}
+      </div></div>`;
+  const sel = $("#scCls"); if(sel) sel.onchange = e => { curCls = e.target.value; LS.set("mz_cls_sel", curCls); renderScreen(); };
+}
+
+/* ================= 路由 ================= */
+function route(){
+  const h = location.hash;
+  clearInterval(screenTimer);
+  document.body.classList.toggle("screen", h === "#screen");
+  $("#topbar").classList.toggle("hidden", h === "#screen");
+  $("#pg-student").classList.toggle("hidden", h === "#scores" || h === "#screen");
+  $("#pg-scores").classList.toggle("hidden", h !== "#scores");
+  $("#pg-screen").classList.toggle("hidden", h !== "#screen");
+  if(h === "#scores"){ $("#regMask").classList.add("hidden"); $("#topTitle").textContent = "〈以粥養生〉前測・成績與診斷"; loadScores(); }
+  else if(h === "#screen"){ $("#regMask").classList.add("hidden"); renderScreen(); screenTimer = setInterval(renderScreen, 15000); }
+  else {
+    $("#topTitle").textContent = "〈以粥養生〉初讀理解小檢查";
+    if(!student) openReg(); else if(!quiz || $("#v-quiz").classList.contains("hidden")) showIntro();
+  }
+}
+window.addEventListener("hashchange", route);
+window.addEventListener("beforeunload", e => { if(quiz && !$("#v-quiz").classList.contains("hidden")){ e.preventDefault(); e.returnValue = ""; } });
+renderWho(); route();
+window.__MZ = { analyze, classifyOpen };
+})();
+</script>
+</body>
+</html>
