@@ -4,143 +4,155 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>〈以粥養生〉初讀理解小檢查</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/lxgw-wenkai-tc@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/lxgw-wenkai-tc@5/700.css">
 <style>
+/* 日系復古手繪生活小誌風格 */
 :root{
-  --rice:#fbf6ec; --paper:#fffdf8; --ink:#3a2e24; --muted:#7c6b5c; --line:#e6dccb;
-  --soy:#7a4a22; --accent:#c56a24; --accent-soft:#f6e3cf;
-  --ok:#2f7a4a; --ok-soft:#e1f1e6; --bad:#b1412f; --bad-soft:#f8e1dc; --warn:#a46a00; --warn-soft:#fbefd2;
-  --l1:#4f7cac; --l2:#3d9a8b; --l3:#c58b2a; --l4:#a2557a;
-  --r:14px;
+  --rice:#f6efe1; --paper:#fbf7ee; --ink:#3f342b; --muted:#857767; --line:#cdbfa6;
+  --soy:#7b5a3c; --accent:#b5523b; --accent-soft:#f1e2cf;
+  --ok:#5f7055; --ok-soft:#e4e9dc; --bad:#b5523b; --bad-soft:#f3e0d6; --warn:#8a6a1c; --warn-soft:#f4e9cc;
+  --l1:#5f7055; --l2:#7b5a3c; --l3:#b08a2e; --l4:#b5523b;
+  --hand:"LXGW WenKai TC","Kaiti TC","STKaiti","DFKai-SB",serif;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--rice);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+html,body{margin:0;color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.75;-webkit-text-size-adjust:100%}
+body{background-color:var(--rice);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .34 0 0 0 0 .24 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E")}
 button,input,select,textarea{font:inherit;color:inherit}
-a{color:var(--soy)}
-.wrap{max-width:760px;margin:0 auto;padding:16px 16px 80px}
+a{color:var(--accent)}
+.art{display:block;height:auto;max-width:100%}
+.wrap{max-width:760px;margin:0 auto;padding:16px 20px 80px}
 .wide{max-width:1180px}
-header.top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-header.top .bowl{font-size:26px}
-header.top h1{font-size:17px;margin:0;font-weight:700;flex:1}
+header.top{display:flex;align-items:baseline;gap:12px;max-width:1180px;margin:0 auto;padding:16px 20px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:var(--rice)}
+header.top .bowl{display:none}
+header.top h1{font-family:var(--hand);font-size:19px;margin:0;font-weight:700;flex:1;letter-spacing:.1em;cursor:pointer}
 header.top .who{font-size:13px;color:var(--muted);text-align:right}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0;box-shadow:0 1px 0 rgba(0,0,0,.02)}
-h2{font-size:20px;margin:0 0 8px}
-h3{font-size:17px;margin:18px 0 8px}
+.card{background:rgba(251,247,238,.7);border:1px solid var(--line);padding:18px 20px;margin:16px 0}
+h2{font-family:var(--hand);font-size:24px;margin:0 0 8px;letter-spacing:.06em}
+h3{font-family:var(--hand);font-size:19px;margin:18px 0 8px}
 .muted{color:var(--muted)}
 .small{font-size:13px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 18px;cursor:pointer;font-weight:600;min-height:44px}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.dark{background:var(--soy);border-color:var(--soy);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1.6px solid var(--ink);background:transparent;border-radius:2px;padding:8px 20px;cursor:pointer;font-family:var(--hand);font-size:17px;letter-spacing:.06em;min-height:44px;color:var(--ink);text-decoration:none}
+.btn:hover{background:rgba(91,77,64,.06)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.dark{background:var(--soy);border-color:var(--soy);color:var(--paper)}
 .btn.danger{border-color:var(--bad);color:var(--bad)}
-.btn.sm{padding:6px 12px;min-height:34px;font-size:14px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:4px 12px;min-height:34px;font-size:15px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .spacer{flex:1}
-label.f{display:block;margin:10px 0 4px;font-weight:600}
-input.t,select.t,textarea.t{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:16px}
-textarea.t{min-height:110px;resize:vertical}
-.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--soy)}
-.L1{background:#e4ecf6;color:var(--l1)} .L2{background:#ddf0ec;color:var(--l2)} .L3{background:#f7ecd6;color:#8a5f12} .L4{background:#f3e1ea;color:var(--l4)}
+label.f{display:block;margin:12px 0 2px;font-family:var(--hand);font-size:17px}
+input.t,select.t,textarea.t{width:100%;border:0;border-bottom:1.5px solid var(--ink);border-radius:0;padding:8px 2px;background:transparent;font-size:16px}
+select.t{border:1px solid var(--line);background:var(--paper);padding:6px 8px}
+input.t:focus,textarea.t:focus{outline:none;border-color:var(--accent)}
+textarea.t{min-height:110px;resize:vertical;border:0;background:repeating-linear-gradient(transparent,transparent 33px,var(--line) 34px);line-height:34px;font-family:var(--hand);font-size:18px}
+.pill{display:inline-block;padding:0 8px;font-size:12.5px;font-family:var(--hand);border:1px solid var(--soy);color:var(--soy);transform:rotate(-1.5deg)}
+.L1{border-color:var(--l1);color:var(--l1)} .L2{border-color:var(--l2);color:var(--l2)} .L3{border-color:var(--l3);color:var(--l3)} .L4{border-color:var(--l4);color:var(--l4)}
 
-/* 學生作答 */
-.progress{display:flex;gap:5px;margin:6px 0 2px}
-.progress i{flex:1;height:7px;border-radius:4px;background:var(--line)}
-.progress i.done{background:var(--accent)} .progress i.cur{background:var(--soy)}
-.qnum{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.05em}
-.stem{font-size:18px;font-weight:700;margin:6px 0 14px}
-.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;margin:9px 0;cursor:pointer;font-size:16px;line-height:1.55}
-.opt .k{flex:0 0 30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--rice);font-weight:800;color:var(--soy)}
-.opt.sel{border-color:var(--accent);background:#fff7ef}
-.opt.sel .k{background:var(--accent);color:#fff}
-.navbar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--rice) 30%);padding:18px 0 10px;display:flex;gap:10px}
+/* 學生作答：像小誌的一頁 */
+.progress{display:flex;gap:6px;margin:10px 0 2px;font-family:var(--hand)}
+.progress i{flex:1;height:3px;background:var(--line)}
+.progress i.done{background:var(--soy)} .progress i.cur{background:var(--accent);height:5px}
+.qnum{font-size:12.5px;color:var(--muted);letter-spacing:.28em;display:flex;align-items:center;gap:10px}
+.qnum::after{content:"";flex:1;border-top:1px solid var(--line)}
+.stem{font-family:var(--serif);font-size:19px;font-weight:700;margin:10px 0 16px;line-height:1.8}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1px dashed #b6a68b;background:#fffaf0;border-radius:0;padding:12px 14px;margin:10px 0;cursor:pointer;font-size:16px;line-height:1.6;box-shadow:1px 2px 0 rgba(91,77,64,.1)}
+.opt .k{flex:0 0 30px;height:30px;display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:19px;font-weight:700;color:var(--soy);position:relative}
+.opt.sel{border:1.6px solid var(--ink);background:#fffdf6}
+.opt.sel .k{color:var(--accent)}
+.opt.sel .k::before{content:"";position:absolute;inset:-2px;border:1.8px solid var(--accent);border-radius:50% 46% 52% 48%;transform:rotate(-10deg)}
+.navbar{position:sticky;bottom:0;background:var(--rice);padding:14px 0 10px;display:flex;gap:10px;border-top:1px solid var(--line)}
 .navbar .btn{flex:1}
 
-/* 視窗 */
-.mask{position:fixed;inset:0;background:rgba(40,28,18,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
-.modal{background:var(--paper);border-radius:18px;max-width:430px;width:100%;padding:22px;max-height:92vh;overflow:auto}
+/* 視窗：借閱卡 */
+.mask{position:fixed;inset:0;background:rgba(63,52,43,.35);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal{background:var(--paper);border:1.5px solid var(--ink);box-shadow:4px 5px 0 rgba(63,52,43,.18);max-width:420px;width:100%;padding:22px;max-height:92vh;overflow:auto}
 .hidden{display:none!important}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:60}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 18px;font-family:var(--hand);font-size:16px;z-index:60}
 
 /* 教師端 */
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:8px 0}
-.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;white-space:nowrap;cursor:pointer;font-weight:600}
-.tabs button.on{background:var(--soy);color:#fff;border-color:var(--soy)}
+.tabs{display:flex;gap:0;overflow-x:auto;border-bottom:1.5px solid var(--ink);margin:12px 0}
+.tabs button{border:0;background:none;padding:8px 14px;white-space:nowrap;cursor:pointer;font-family:var(--hand);font-size:17px;color:var(--muted)}
+.tabs button.on{color:var(--ink);font-weight:700;box-shadow:inset 0 -3px 0 var(--accent)}
 .grid{display:grid;gap:12px}
 .g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
-.stat .n{font-size:28px;font-weight:800}
+.stat{border-top:1.5px solid var(--ink);padding:10px 2px}
+.stat .n{font-family:var(--hand);font-size:30px;font-weight:700}
 .stat .l{font-size:13px;color:var(--muted)}
-.bar{height:12px;background:#efe7da;border-radius:6px;overflow:hidden}
-.bar>b{display:block;height:100%;border-radius:6px}
+.bar{height:11px;background:rgba(205,191,166,.4)}
+.bar>b{display:block;height:100%}
 .hrow{display:grid;grid-template-columns:120px 1fr 64px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
-table.tb{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+table.tb{width:100%;border-collapse:collapse;font-size:14px}
 .tb th,.tb td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
-.tb th{background:#f6efe3;position:sticky;top:0;font-size:13px;white-space:nowrap}
+.tb th{background:#efe6d4;position:sticky;top:0;font-family:var(--hand);font-size:15px;white-space:nowrap}
 .tb tr.sus td{background:var(--warn-soft)}
-.scroll{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:10px}
+.scroll{overflow:auto;max-height:70vh;border:1px solid var(--line)}
 .c-ok{color:var(--ok);font-weight:700} .c-bad{color:var(--bad);font-weight:700}
 .feat{margin:4px 0;padding-left:18px}
 .feat li{margin:2px 0}
 .optline{display:grid;grid-template-columns:26px 1fr 52px;gap:8px;align-items:center;margin:6px 0;font-size:14px}
 .optline .why{grid-column:2/4;font-size:12.5px;color:var(--muted);margin-top:-4px}
-.tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:6px;background:var(--bad-soft);color:var(--bad);margin-left:4px;font-weight:700}
-.typebox{border-left:6px solid var(--accent);padding:10px 14px;border-radius:8px;background:#fff;margin:8px 0}
-.banner{background:var(--warn-soft);border:1px solid #efd9a6;color:#6d4b00;border-radius:10px;padding:10px 14px;font-size:14px}
-details.stu{border:1px solid var(--line);border-radius:12px;background:#fff;margin:8px 0}
-details.stu summary{cursor:pointer;padding:10px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;list-style:none}
+.tag{display:inline-block;font-size:12.5px;padding:0 6px;border:1px solid var(--bad);color:var(--bad);margin-left:4px;font-family:var(--hand);transform:rotate(-2deg)}
+.typebox{border-left:3px solid var(--accent);padding:8px 14px;background:rgba(251,247,238,.8);margin:8px 0}
+.banner{background:var(--warn-soft);border:1px solid #e3d2a6;color:#5d4718;padding:10px 14px;font-size:14px}
+details.stu{border-bottom:1px solid var(--line);margin:0}
+details.stu summary{cursor:pointer;padding:10px 4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;list-style:none}
 details.stu summary::-webkit-details-marker{display:none}
-details.stu .body{padding:0 14px 14px}
-.lvbadge{font-weight:800;border-radius:8px;padding:2px 8px;font-size:13px;color:#fff}
-.quote{background:var(--rice);border-radius:8px;padding:8px 12px;margin:6px 0;white-space:pre-wrap}
+details.stu .body{padding:0 4px 14px}
+.lvbadge{font-family:var(--hand);font-weight:700;padding:0 8px;font-size:14px;color:#fff8ef}
+.quote{border-left:3px solid var(--line);padding:4px 12px;margin:6px 0;white-space:pre-wrap;font-family:var(--hand);font-size:16px}
 
-/* 主畫面 */
-.hero{text-align:center;padding:34px 20px 26px;background:linear-gradient(160deg,#fffdf8 0%,#f7e8d3 100%);border:1px solid var(--line);border-radius:22px;margin-top:18px;position:relative;overflow:hidden}
-.hero .bigbowl{font-size:64px;line-height:1;display:block;margin-bottom:6px}
-.hero .steam{position:absolute;left:50%;top:14px;transform:translateX(-50%);font-size:22px;opacity:.35;letter-spacing:10px}
-.hero h2{font-size:30px;margin:4px 0 2px;letter-spacing:.04em}
-.hero .by{color:var(--muted);font-size:15px}
-.hero .lead{font-size:18px;font-weight:700;color:var(--soy);margin:14px 0 4px}
-.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px}
-.chips span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600}
-.homebtns{display:grid;gap:12px;margin:18px 0}
-.homebtn{display:flex;align-items:center;gap:14px;text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:18px;padding:16px 18px;cursor:pointer;text-decoration:none;color:var(--ink);width:100%}
-.homebtn .ic{font-size:34px;flex:0 0 auto}
-.homebtn b{display:block;font-size:19px}
+/* 主畫面：雜誌封面 */
+.hero{padding:22px 0 6px;margin-top:6px}
+.hero .bigbowl,.hero .steam{display:none}
+.hero .vol{font-size:12px;letter-spacing:.35em;color:var(--muted)}
+.hero h2{font-family:var(--hand);font-size:clamp(50px,14vw,92px);line-height:1.05;margin:6px 0 0;letter-spacing:.06em}
+.hero .by{color:var(--muted);font-size:14px;letter-spacing:.2em}
+.hero .lead{font-family:var(--hand);font-size:clamp(20px,4.5vw,26px);letter-spacing:.4em;color:var(--soy);margin:4px 0 4px}
+.hero .still{width:100%;max-width:640px;margin:10px auto 0}
+.chips{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 4px;font-size:14px;color:var(--muted)}
+.chips span{border-bottom:1px solid var(--line);padding:2px 0}
+.homebtns{display:grid;gap:0;margin:18px 0;border-top:1.5px solid var(--ink)}
+.homebtn{display:flex;align-items:center;gap:14px;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:16px 4px;cursor:pointer;text-decoration:none;color:var(--ink);width:100%}
+.homebtn .ic{font-family:var(--hand);font-size:26px;flex:0 0 46px;text-align:center;color:var(--soy)}
+.homebtn b{display:block;font-family:var(--hand);font-size:22px;letter-spacing:.06em}
 .homebtn small{color:var(--muted);font-size:14px}
-.homebtn.main{background:var(--accent);border-color:var(--accent);color:#fff}
-.homebtn.main small{color:#ffe9d6}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
-.steps div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;font-size:14px}
-.steps div b{display:block;font-size:22px;color:var(--accent)}
-.welcome{background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:10px 14px;font-size:15px;margin-top:14px}
-header.top h1{cursor:pointer}
-/* 大屏 */
-body.screen{background:#fbf3e4;color:#2e2219}
+.homebtn.main b{color:var(--accent)}
+.homebtn:hover b{text-decoration:underline;text-decoration-color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+.steps div{border-top:1px solid var(--line);padding:10px 4px;font-size:14px}
+.steps div b{display:block;font-family:var(--hand);font-size:26px;color:var(--soy)}
+.welcome{font-family:var(--hand);font-size:18px;margin-top:12px;border-left:3px solid var(--accent);padding-left:12px}
+/* 大屏：淺色紙底 */
+body.screen header.top{display:none}
 #pg-screen{padding:3vh 4vw;min-height:100vh}
-.sc-title{font-size:min(4.2vw,7vh);font-weight:900;margin:0}
-#scCls{background:#fff;color:#2e2219;border:2px solid #d9c7ad;font-size:min(1.4vw,2.4vh);padding:.4vh .8vw;border-radius:.6vw}
-.sc-sub{font-size:min(2vw,3.2vh);color:#7c6b5c}
+.sc-title{font-family:var(--hand);font-size:min(4.2vw,7vh);font-weight:700;margin:0;letter-spacing:.06em}
+#scCls{background:var(--paper);color:var(--ink);border:1.5px solid var(--line);font-size:min(1.4vw,2.4vh);padding:.4vh .8vw}
+.sc-sub{font-family:var(--hand);font-size:min(2vw,3.2vh);color:var(--soy)}
 .sc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3vw;margin-top:2.5vh}
-.sc-box{background:#fff;border:2px solid #ead9c0;border-radius:2vw;padding:3vh 2.4vw;box-shadow:0 .6vh 2vh rgba(122,74,34,.08)}
-.sc-box h3{font-size:min(2.2vw,3.6vh);margin:0 0 1.2vh;color:#9a4f12}
-.sc-big{font-size:min(8vw,12vh);font-weight:900;line-height:1}
+.sc-box{border-top:2px solid var(--ink);padding:2vh .4vw}
+.sc-box h3{font-family:var(--hand);font-size:min(2.3vw,3.8vh);margin:0 0 1.2vh;color:var(--ink)}
+.sc-big{font-family:var(--hand);font-size:min(8vw,12vh);font-weight:700;line-height:1}
 .seats{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw;margin-top:2vh}
-.seats div{height:min(4.6vw,7vh);border-radius:.8vw;display:flex;align-items:center;justify-content:center;font-size:min(1.9vw,3.2vh);font-weight:800;background:#f1e7d8;color:#b3a08a}
-.seats div.on{background:#d9752a;color:#fff}
+.seats div{height:min(4.6vw,7vh);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:min(1.9vw,3.2vh);font-weight:700;border:1.5px solid var(--line);color:#b8aa94}
+.seats div.on{background:var(--soy);border-color:var(--soy);color:#fff8ef}
 .seats div{position:relative}
-.seats div i{position:absolute;top:.4vh;right:.35vw;font-style:normal;font-size:min(1.05vw,1.7vh);line-height:1.2;background:rgba(255,255,255,.92);color:#2e2219;border-radius:.4vw;padding:0 .35vw;font-weight:900}
-.lvleg{display:flex;flex-wrap:wrap;gap:.6vw;margin-top:1.6vh;font-size:min(1.3vw,2.2vh);font-weight:800}
+.seats div i{position:absolute;top:.3vh;right:.3vw;font-style:normal;font-size:min(1.05vw,1.7vh);line-height:1.2;background:rgba(255,250,240,.92);color:var(--ink);padding:0 .3vw;font-weight:700}
+.lvleg{display:flex;flex-wrap:wrap;gap:.8vw;margin-top:1.6vh;font-size:min(1.3vw,2.2vh);font-family:var(--hand)}
 .lvleg span{display:inline-flex;align-items:center;gap:.4vw}
-.lvleg b{display:inline-block;width:min(1.6vw,2.6vh);height:min(1.6vw,2.6vh);border-radius:.4vw}
-#scLv{background:#fff;color:#2e2219;border:2px solid #d9c7ad;font-size:min(1.3vw,2.2vh);padding:.4vh .9vw;border-radius:999px;cursor:pointer;font-weight:800;margin-left:1vw}
-#scLv.on{background:#2e2219;color:#fff;border-color:#2e2219}
-.sc-row{display:grid;grid-template-columns:9vw 1fr 7vw;gap:1.2vw;align-items:center;margin:1vh 0;font-size:min(2vw,3.4vh);font-weight:800}
-.sc-bar{height:3.2vh;background:#f1e7d8;border-radius:2vh;overflow:hidden}
+.lvleg b{display:inline-block;width:min(1.6vw,2.6vh);height:min(1.6vw,2.6vh)}
+#scLv{background:transparent;color:var(--ink);border:1.5px solid var(--ink);font-family:var(--hand);font-size:min(1.3vw,2.2vh);padding:.3vh .9vw;cursor:pointer;margin-left:1vw}
+#scLv.on{background:var(--ink);color:var(--paper)}
+.sc-row{display:grid;grid-template-columns:9vw 1fr 7vw;gap:1.2vw;align-items:center;margin:1vh 0;font-family:var(--hand);font-size:min(2vw,3.4vh);font-weight:700}
+.sc-bar{height:3vh;background:rgba(205,191,166,.45)}
 .sc-bar b{display:block;height:100%}
-@media (max-width:640px){ .hrow{grid-template-columns:90px 1fr 54px} .stem{font-size:17px} }
-@media print{ header.top,.tabs,.btn{display:none!important} }
+@media (max-width:640px){ .hrow{grid-template-columns:90px 1fr 54px} .stem{font-size:17.5px} .wrap{padding:14px 14px 80px} }
+@media print{ header.top,.tabs,.btn{display:none!important} body{background:#fff} }
 </style>
-<script src="config.js?v=2"></script>
-<script src="questions.js?v=3"></script>
+<script src="art.js?v=1"></script>
+<script src="config.js?v=3"></script>
+<script src="questions.js?v=4"></script>
 </head>
 <body>
 
@@ -153,17 +165,16 @@ body.screen{background:#fbf3e4;color:#2e2219}
 <!-- ============ 學生頁 ============ -->
 <main id="pg-home" class="wrap hidden">
   <section class="hero">
-    <span class="steam">∿ ∿ ∿</span>
-    <span class="bigbowl">🍚</span>
-    <h2>〈以粥養生〉</h2>
-    <div class="by">韓良憶</div>
+    <div class="vol">VOL.0　前測　・　韓良憶〈以粥養生〉</div>
+    <h2>以粥養生</h2>
     <div class="lead">初讀理解小檢查</div>
-    <div class="chips"><span>📝 9 題</span><span>⏱️ 約 8～10 分鐘</span><span>🌱 不計分</span><span>📱 手機、電腦都可以</span></div>
+    <div id="heroArt"></div>
+    <div class="chips"><span>九題</span><span>約八～十分鐘</span><span>不計分</span><span>手機、電腦都可以</span></div>
     <div id="homeWelcome" class="welcome hidden"></div>
   </section>
   <div class="homebtns">
-    <a class="homebtn main" href="#quiz"><span class="ic">✏️</span><span><b id="homeGoLabel">我是學生，開始作答</b><small>先登記班級、座號、姓名，再一題一題作答</small></span></a>
-    <a class="homebtn" href="#scores"><span class="ic">📋</span><span><b>老師入口</b><small>完成名單、成績與診斷分析、大屏展示</small></span></a>
+    <a class="homebtn main" href="#quiz"><span class="ic">壹</span><span><b id="homeGoLabel">我是學生，開始作答</b><small>先登記班級、座號、姓名，再一題一題作答</small></span></a>
+    <a class="homebtn" href="#scores"><span class="ic">貳</span><span><b>老師入口</b><small>完成名單、成績與診斷分析、大屏展示</small></span></a>
   </div>
   <h3>作答三步驟</h3>
   <div class="steps"><div><b>1</b>登記班級<br>座號、姓名</div><div><b>2</b>讀題作答<br>8 選 1 寫</div><div><b>3</b>按下送出<br>交給老師</div></div>
@@ -185,7 +196,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
     <div class="row" style="margin-top:14px">
       <button class="btn primary" id="startBtn">開始作答</button>
       <button class="btn sm" id="changeMe">不是我？重新登記</button>
-      <a class="btn sm" href="#">🏠 主畫面</a>
+      <a class="btn sm" href="#">主畫面</a>
     </div>
   </section>
 
@@ -199,11 +210,11 @@ body.screen{background:#fbf3e4;color:#2e2219}
   </section>
 
   <section id="v-done" class="card hidden">
-    <h2>✅ 已經送出，謝謝你！</h2>
+    <h2>已經送出，謝謝你！</h2>
     <p>老師會根據全班的作答，設計接下來的閱讀活動。現在可以關掉這個頁面了。</p>
-    <p><a class="btn" href="#">🏠 回主畫面</a></p>
+    <p><a class="btn" href="#">回到主畫面</a></p>
     <div id="codeBox" class="hidden">
-      <div class="banner">⚠️ 網路好像有問題，作答<b>還沒送到老師那裡</b>。請按「複製成績碼」，貼到 Google Classroom 的私人留言給老師。</div>
+      <div class="banner">網路好像有問題，作答<b>還沒送到老師那裡</b>。請按「複製成績碼」，貼到 Google Classroom 的私人留言給老師。</div>
       <textarea class="t" id="codeText" readonly style="margin-top:8px;min-height:90px;font-size:12px"></textarea>
       <div class="row" style="margin-top:8px"><button class="btn dark" id="copyCode">複製成績碼</button><button class="btn" id="retrySend">再試著送出一次</button></div>
     </div>
@@ -214,7 +225,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
 <main id="pg-scores" class="wrap wide hidden">
   <section class="card">
     <div class="row">
-      <h2 style="margin:0">📋 前測完成情形</h2>
+      <h2 style="margin:0">前測完成情形</h2>
       <span class="spacer"></span>
       <label class="small muted">班級</label>
       <select class="t" id="clsSel" style="width:auto;min-width:110px"></select>
@@ -227,7 +238,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
     </div>
     <div class="row hidden" style="margin-top:10px" id="logoutRow">
       <span class="pill">老師已登入</span>
-      <button class="btn sm" id="screenBtn">🖥️ 開啟大屏展示</button>
+      <button class="btn sm" id="screenBtn">開啟大屏展示</button>
       <button class="btn sm" id="logoutBtn">登出</button>
       <span class="small muted" id="modeNote2"></span>
     </div>
@@ -239,7 +250,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
     <div class="tabs" id="tabs"></div>
     <div id="tabBody"></div>
   </section>
-  <p class="small muted" style="text-align:center"><a href="#">🏠 回主畫面</a></p>
+  <p class="small muted" style="text-align:center"><a href="#">← 回到主畫面</a></p>
 </main>
 
 <!-- ============ 大屏 ============ -->
@@ -248,7 +259,7 @@ body.screen{background:#fbf3e4;color:#2e2219}
 <!-- 登記視窗 -->
 <div class="mask hidden" id="regMask">
   <div class="modal">
-    <h2>🍚 先登記一下</h2>
+    <h2>借閱登記</h2>
     <p class="muted small">只需要班級、座號和姓名，這台裝置下次會自動記住。</p>
     <label class="f">班級</label><input class="t" id="rCls" placeholder="例如 801" inputmode="numeric" autocomplete="off">
     <label class="f">座號</label><input class="t" id="rSeat" placeholder="例如 12" inputmode="numeric" autocomplete="off">
@@ -346,19 +357,19 @@ function localApi(p){
 
 /* ================= 診斷分析 ================= */
 const TYPES = [
-  { code:"A", level:0, color:"#b1412f", label:"找不到文本訊息", short:"擷取待加強",
+  { code:"A", level:0, color:"#b5523b", label:"找不到文本訊息", short:"擷取待加強",
     desc:"第1～3題答對不到2題：還無法穩定找到人物、飲食習慣等明確訊息，容易把爸爸、媽媽、阿媽的吃法混在一起。",
     game:"人物分類、文本訊息配對", how:"回到第3～5段，用三種顏色分別畫出「爸爸／阿媽／阿媽和媽媽共同」的吃粥習慣，再進行人物分類卡。" },
-  { code:"B", level:1, color:"#c56a24", label:"找得到訊息，但無法推論", short:"推論待加強",
+  { code:"B", level:1, color:"#c27b45", label:"找得到訊息，但無法推論", short:"推論待加強",
     desc:"能找到明確訊息，但還沒把「餵粥、吹涼」這些事件和人物的情感連起來，或只看到粥「好消化」的功能。",
     game:"事件排序、「事件 → 感受」連連看", how:"把第6～8段排成「生病→爸媽吹涼餵粥→長大到荷蘭→生病仍想吃肉鬆稀飯」，每一步問「她心裡感覺到什麼？」" },
-  { code:"C", level:2, color:"#c58b2a", label:"能理解單一段落，但無法整合全文", short:"整合待加強",
+  { code:"C", level:2, color:"#b08a2e", label:"能理解單一段落，但無法整合全文", short:"整合待加強",
     desc:"能讀懂家庭故事，但不容易看出作者為什麼從家人寫到華人、《禮記》、陸游（從個人走向文化）。",
     game:"段落功能配對（起承轉合）、文章結構圖", how:"給每段一張卡，讓學生放進「起／承／轉／合」，並說出「這一段把粥從＿＿帶到＿＿」。" },
-  { code:"D", level:3, color:"#3d9a8b", label:"能理解內容，但無法判斷證據與結論", short:"證據判斷待加強",
+  { code:"D", level:3, color:"#6f8a6a", label:"能理解內容，但無法判斷證據與結論", short:"證據判斷待加強",
     desc:"能理解內容與寫作安排，但會把陸游「一個人的例子」當成「一定能長壽」的證明，或用課外看法代替證據。",
     game:"「證據夠不夠？」判斷卡", how:"出幾張「一個人的經驗 → 結論」卡片，判斷證據夠不夠；並找出第12段作者用問句保留判斷的地方。" },
-  { code:"E", level:4, color:"#2f7a4a", label:"起點穩定", short:"四層皆通過",
+  { code:"E", level:4, color:"#5f7055", label:"起點穩定", short:"四層皆通過",
     desc:"四個層次都達到門檻。",
     game:"擔任小組小老師、挑戰開放題第三層", how:"請他在遊戲中擔任解說員，並挑戰說明「粥如何從個人療癒走到華人文化」。" }
 ];
@@ -669,7 +680,7 @@ function suggestBox(S){
   const lvCount = [0,0,0,0,0]; S.forEach(x => lvCount[x.A.level]++);
   const tagCount = {}; S.forEach(x => Object.entries(x.A.tags).forEach(([t,qs]) => tagCount[t] = (tagCount[t]||0) + qs.length));
   const topTags = Object.entries(tagCount).sort((a,b) => b[1]-a[1]).slice(0,3);
-  let h = `<div class="card"><h3 style="margin-top:0">💡 下一節課的建議</h3>`;
+  let h = `<div class="card"><h3 style="margin-top:0">下一節課的建議</h3>`;
   const main = TYPES.filter(T => T.level < 4).map(T => ({ T, c: lvCount[T.level] })).sort((a,b) => b.c - a.c)[0];
   if(main && main.c) h += `<div class="typebox" style="border-color:${main.T.color}"><b>人數最多：${main.T.code}｜${esc(main.T.label)}（${main.c} 人）</b><br>建議加強遊戲：<b>${esc(main.T.game)}</b><br><span class="small">${esc(main.T.how)}</span></div>`;
   if(topTags.length) h += `<p><b>全班最常見的錯誤類型：</b></p><ul class="feat">` + topTags.map(([t,c]) => `<li><b>${esc(P.tags[t].label)}</b>（共 ${c} 次）：${esc(P.tags[t].feature)} → 可用「${esc(P.tags[t].game)}」</li>`).join("") + `</ul>`;
@@ -706,7 +717,7 @@ function tabItems(el){
 /* ---- 學生診斷 ---- */
 function tabStudents(el){
   const S = analyzedClass();
-  let h = modeSwitch() + `<div class="row small" style="margin-bottom:8px"><span class="muted">點每位學生可展開：答題特色、各層表現、開放題原文與老師判定。</span><span class="spacer"></span><button class="btn sm" id="csvBtn">⬇ 匯出診斷表（Excel 可開）</button></div>`;
+  let h = modeSwitch() + `<div class="row small" style="margin-bottom:8px"><span class="muted">點每位學生可展開：答題特色、各層表現、開放題原文與老師判定。</span><span class="spacer"></span><button class="btn sm" id="csvBtn">匯出診斷表（Excel 可開）</button></div>`;
   if(!S.length){ el.innerHTML = h + `<div class="card">尚無資料。</div>`; bindMode(el); return; }
   S.forEach(({ r, a, A }) => {
     const T = A.type;
@@ -794,7 +805,7 @@ function tabRecords(el){
       <input class="t" id="fSeat" placeholder="篩選座號" style="width:120px" value="${esc(recFilter.seat)}">
       <label class="small"><input type="checkbox" id="fSus" ${recFilter.onlySus ? "checked" : ""}> 只看疑似亂答</label>
       <label class="small">用時門檻 <input class="t" id="fSec" type="number" min="0" style="width:80px;display:inline-block" value="${suspectSec}"> 秒</label>
-      <span class="spacer"></span><button class="btn sm" id="copyTsv">📋 複製表格（可貼到 Excel）</button></div>
+      <span class="spacer"></span><button class="btn sm" id="copyTsv">複製表格（可貼到 Excel）</button></div>
     <p class="small muted" style="margin:6px 0 0">疑似亂答：用時少於門檻，或 8 題都選同一個選項且未全對。<b>只是提醒，請老師確認。</b></p></div>`;
   const head = ["完成時間","座號","姓名","第幾次","用時","答對","Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","第9題","閱讀層級","疑似亂答"];
   h += `<div class="scroll"><table class="tb"><thead><tr>${head.map(x => `<th>${x}</th>`).join("")}</tr></thead><tbody>`;
@@ -847,7 +858,7 @@ function tabTools(el){
     <p class="small muted">學生網路斷線時，交卷畫面會出現一段以 MZ1: 開頭的代碼。貼在下面（可一次貼多段，每段一行）。</p>
     <textarea class="t" id="impText" placeholder="MZ1:..."></textarea>
     <div class="row" style="margin-top:8px"><button class="btn dark" id="impBtn">匯入</button></div></div>
-    <div class="card"><h3 style="margin-top:0">大屏展示</h3><p class="small muted">投影用：只顯示完成人數、座號、各層答對率、層級分布，不顯示個人分數或疑似亂答。每 15 秒自動更新。</p><button class="btn" id="scr2">🖥️ 開啟大屏</button></div>
+    <div class="card"><h3 style="margin-top:0">大屏展示</h3><p class="small muted">投影用：只顯示完成人數、座號、各層答對率、層級分布，不顯示個人分數或疑似亂答。每 15 秒自動更新。</p><button class="btn" id="scr2">開啟大屏</button></div>
     <div class="card"><h3 style="margin-top:0">清除本班資料</h3><p class="small muted">會刪除「${esc(curCls)}」班這份前測的全部資料（試算表兩個工作表都會刪），無法復原。</p><button class="btn danger" id="clrBtn">清除 ${esc(curCls)} 班資料</button></div>`;
   $("#scr2").onclick = () => { location.hash = "#screen"; };
   $("#impBtn").onclick = async () => {
@@ -882,13 +893,13 @@ async function renderScreen(){
   const doneSeats = new Set(S.map(x => x.r.seat));
   const seatLv = {}; S.forEach(x => seatLv[x.r.seat] = x.A.level);
   const showLv = !!LS.get("mz_screen_lv", false);
-  const LVC = ["#c0392b","#e67e22","#d4a017","#2e86c1","#27864a"], LVN = ["起步","擷取","推論","詮釋","評估"];
+  const LVC = ["#b5523b","#c27b45","#b08a2e","#6f8a6a","#5f7055"], LVN = ["起步","擷取","推論","詮釋","評估"];
   const seatCell = n => { const k = String(n), done = doneSeats.has(k);
     if(!done) return `<div>${n}</div>`;
     if(!showLv) return `<div class="on">${n}</div>`;
     const l = seatLv[k]; return `<div class="on" style="background:${LVC[l]};color:#fff">${n}<i>${l}</i></div>`; };
   const lv = [0,0,0,0,0]; S.forEach(x => lv[x.A.level]++);
-  el.innerHTML = `<div class="row"><div><p class="sc-title">🍚 〈以粥養生〉初讀小檢查</p><div class="sc-sub">${esc(curCls)} 班・每 15 秒自動更新</div></div><span class="spacer"></span>
+  el.innerHTML = `<div class="row"><div><p class="sc-title">〈以粥養生〉初讀小檢查</p><div class="sc-sub">${esc(curCls)} 班・每 15 秒自動更新</div></div><span class="spacer"></span>
       <button id="scLv" class="${showLv ? "on" : ""}">${showLv ? "隱藏層級" : "顯示層級"}</button><select id="scCls" style="margin-left:1vw">${classes.map(c => `<option ${c === curCls ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>
       <a href="#scores" style="color:#9a4f12;font-size:1.4vw;margin-left:1vw">離開</a></div>
     <div class="sc-grid">
@@ -897,7 +908,7 @@ async function renderScreen(){
         ${showLv ? `<div class="lvleg">${LVN.map((t,l) => `<span><b style="background:${LVC[l]}"></b>${l} ${t}</span>`).join("")}</div>` : ""}</div>
       <div class="sc-box"><h3>全班各層次答對率</h3>
         ${P.layers.map(L => { const c = S.reduce((s,x) => s + x.A.layers[L.id-1].c, 0), tot = n * x0(L.id), p = pct(c,tot);
-          return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#3f6fa3","#2c8a7b","#c58b2a","#a2557a"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
+          return `<div class="sc-row"><div>${esc(L.short)}</div><div class="sc-bar"><b style="width:${p}%;background:${["","#5f7055","#7b5a3c","#b08a2e","#b5523b"][L.id]}"></b></div><div>${p}%</div></div>`; }).join("")}
         <h3 style="margin-top:2vh">閱讀層級分布</h3>
         ${[0,1,2,3,4].map(l => `<div class="sc-row" style="font-size:min(1.6vw,2.8vh);margin:.6vh 0"><div>第${l}層 <span style="font-size:.8em;color:#7c6b5c">${LVN[l]}</span></div><div class="sc-bar"><b style="width:${pct(lv[l],n)}%;background:${LVC[l]}"></b></div><div>${lv[l]}人</div></div>`).join("")}
       </div></div>`;
@@ -938,6 +949,7 @@ function renderHome(){
 window.addEventListener("hashchange", route);
 window.addEventListener("beforeunload", e => { if(quiz && !$("#v-quiz").classList.contains("hidden")){ e.preventDefault(); e.returnValue = ""; } });
 $("#topTitle").onclick = () => { location.hash = "#"; };
+if(window.Art){ document.body.insertAdjacentHTML("afterbegin", Art.defs()); $("#heroArt").innerHTML = Art.stillLife() + Art.table(640); }
 renderWho(); route();
 window.__MZ = { analyze, classifyOpen };
 })();
