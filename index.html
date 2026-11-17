@@ -711,7 +711,18 @@ function tabItems(el){
     }
     h += `</div>`;
   });
+  // 第 9 題（開放題）：選擇分布＋文字層次，原文在「開放題分類」
+  const cc = {}; S.forEach(x => cc[x.a.openChoice || "—"] = (cc[x.a.openChoice || "—"] || 0) + 1);
+  const lv = [0,0,0,0]; S.forEach(x => lv[x.A.openLevel]++);
+  h += `<div class="card"><div class="row"><span class="pill">開放題</span><span class="spacer"></span><b>寫了文字 ${S.filter(x => String(x.a.openText || "").trim()).length}／${n} 人</b></div>
+    <h3 style="margin:8px 0 2px">第 ${OPEN.id} 題　${esc(OPEN.stem)}</h3><div class="small muted">${esc(OPEN.prompt)}</div>
+    <h4 style="margin:10px 0 2px">選了哪一部分</h4>` +
+    OPEN.choices.map(c => `<div class="optline"><b>${c.k}</b><div><div>${esc(c.t)}</div><div class="bar" style="margin-top:3px"><b style="width:${pct(cc[c.k] || 0, n)}%;background:var(--accent)"></b></div></div><div><b>${cc[c.k] || 0}</b> 人</div><div class="why"></div></div>`).join("") +
+    `<h4 style="margin:10px 0 2px">寫出來的層次</h4>` +
+    [3,2,1,0].map(l => `<div class="optline"><b></b><div><div>${esc(OPEN_NAMES[l])}</div><div class="bar" style="margin-top:3px"><b style="width:${pct(lv[l], n)}%;background:${l === 3 ? "var(--ok)" : "#d39a86"}"></b></div></div><div><b>${lv[l]}</b> 人</div><div class="why"></div></div>`).join("") +
+    `<p class="small muted">層次含系統初判與老師改判。每個人寫的原文，請按下方按鈕看。</p><button class="btn sm" id="goOpen">看每個人的原文與分類 →</button></div>`;
   el.innerHTML = h; bindMode(el);
+  const go = $("#goOpen"); if(go) go.onclick = () => { curTab = "open"; renderTeacher(); window.scrollTo({ top:0 }); };
 }
 
 /* ---- 學生診斷 ---- */
