@@ -148,6 +148,52 @@ body.screen header.top{display:none}
 .sc-bar{height:3vh;background:rgba(205,191,166,.45)}
 .sc-bar b{display:block;height:100%}
 @media (max-width:640px){ .hrow{grid-template-columns:90px 1fr 54px} .stem{font-size:17.5px} .wrap{padding:14px 14px 80px} }
+
+/* ===== 後測：報紙版面（和閱讀小誌區隔） ===== */
+:root{ --rice:#fdfdfb; --paper:#ffffff; --ink:#1d1d1f; --muted:#6b6b6b; --line:#c9c9c4; --accent:#c8322a; --soy:#1f4e8c; --accent-soft:#fbe9e7;
+  --news:"Noto Serif TC","Songti TC","PMingLiU",serif; --hand:var(--news); }
+body{background:#ecebe6;background-image:none}
+.wrap{background:#fdfdfb;box-shadow:0 0 0 1px #d8d7d0,0 6px 24px rgba(0,0,0,.06);min-height:100vh}
+body.screen .wrap,#pg-screen{box-shadow:none}
+header.top{background:#1d1d1f;color:#fff;border-bottom:4px solid var(--accent);max-width:none;padding:10px 20px}
+header.top h1{font-family:var(--news);letter-spacing:.3em;color:#fff}
+header.top h1::before{content:"後測特刊｜";color:#ff8a80}
+header.top .who{color:#ddd}
+.np-strip{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:5px 2px;margin-top:8px;letter-spacing:.1em}
+.np-strip span{border-right:1px solid var(--line);padding-right:14px} .np-strip .sp{flex:1;border:0}
+.np-strip span:last-child{border:0;padding:0}
+.np-mast{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:18px 0 14px;border-bottom:3px solid var(--ink)}
+.np-vert{writing-mode:vertical-rl;font-family:var(--news);font-size:14px;letter-spacing:.25em;line-height:1.9;border-left:1px solid var(--line);border-right:1px solid var(--line);padding:0 6px;height:200px;color:#333}
+.np-title b{display:block;font-family:var(--news);font-weight:900;font-size:clamp(56px,15vw,112px);line-height:1;color:var(--accent);letter-spacing:.04em;text-shadow:3px 3px 0 rgba(31,78,140,.18)}
+.np-title small{display:inline-block;margin-top:10px;background:var(--soy);color:#fff;font-family:var(--news);font-size:clamp(16px,3.6vw,22px);letter-spacing:.4em;padding:3px 14px}
+.np-stamp{width:76px;height:76px;border:3px solid var(--accent);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--news);font-weight:900;font-size:17px;line-height:1.25;transform:rotate(-12deg)}
+.np-cols{display:grid;grid-template-columns:repeat(3,1fr);margin:0 0 6px}
+.np-cols>div{padding:10px 12px;border-right:1px solid var(--line);font-size:14px;line-height:1.8}
+.np-cols>div:last-child{border:0}
+.np-cols h4{margin:0 0 4px;font-family:var(--news);font-size:16px;color:var(--soy);border-bottom:2px solid var(--soy);display:inline-block}
+.np-cols p{margin:0;text-align:justify}
+.homebtns{border-top:3px solid var(--ink)}
+.homebtn .ic{background:var(--accent);color:#fff;font-family:var(--news);font-size:20px;flex:0 0 40px;height:40px;display:flex;align-items:center;justify-content:center}
+.homebtn b{font-family:var(--news);font-weight:900}
+.card{background:#fff;border:0;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);box-shadow:none}
+#qcard{position:relative;padding-top:22px}
+#qcard::before{content:"後測　試題";position:absolute;top:-1px;left:0;background:var(--ink);color:#fff;font-size:12px;letter-spacing:.3em;padding:1px 10px}
+.qnum{color:var(--accent);font-weight:700}
+.qnum::after{border-top:1px solid var(--ink)}
+.stem{font-family:var(--news);font-weight:900}
+.opt{border:1px solid var(--line);background:#fff;box-shadow:none}
+.opt .k{color:var(--soy);font-family:var(--news)}
+.opt.sel{border:2px solid var(--soy);background:#f1f5fb}
+.opt.sel .k{color:var(--accent)}
+.progress i.done{background:var(--soy)} .progress i.cur{background:var(--accent)}
+.navbar{background:#fdfdfb;border-top:3px double var(--ink)}
+.btn{font-family:var(--news);border-radius:0}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.dark{background:var(--soy);border-color:var(--soy);color:#fff}
+.tb th{background:#eef1f6}
+textarea.t{font-family:var(--news)}
+.welcome{border-left-color:var(--accent)}
+@media (max-width:640px){ .np-cols{grid-template-columns:1fr} .np-cols>div{border-right:0;border-bottom:1px dashed var(--line)} .np-vert{height:170px;font-size:11.5px;letter-spacing:.12em} .np-title b{font-size:13vw} header.top h1{font-size:16px;letter-spacing:.15em} header.top h1::before{content:"後測｜"} .np-stamp{width:58px;height:58px;font-size:14px} .np-mast{gap:10px} }
 @media print{ header.top,.tabs,.btn{display:none!important} body{background:#fff} }
 </style>
 <script src="art.js?v=1"></script>
@@ -165,12 +211,18 @@ body.screen header.top{display:none}
 
 <!-- ============ 學生頁 ============ -->
 <main id="pg-home" class="wrap hidden">
-  <section class="hero">
-    <div class="vol">VOL.1　後測　・　韓良憶〈以粥養生〉</div>
-    <h2>以粥養生</h2>
-    <div class="lead">學完之後的理解檢查</div>
-    <div id="heroArt"></div>
-    <div class="chips"><span>十題</span><span>約八～十分鐘</span><span>不計分</span><span>手機、電腦都可以</span></div>
+  <section class="paper">
+    <div class="np-strip"><span>第 1 版</span><span>國文科・後測特刊</span><span>902</span><span class="sp"></span><span id="npDate"></span></div>
+    <div class="np-mast">
+      <div class="np-vert">韓良憶〈以粥養生〉<br>學完之後的理解檢查</div>
+      <div class="np-title"><b>以粥養生</b><small>學後理解檢查</small></div>
+      <div class="np-stamp">後測<br>特刊</div>
+    </div>
+    <div class="np-cols">
+      <div><h4>本期內容</h4><p>選擇題九則、短文一則。請依照課文作答，不必用課外知識。約十二至十五分鐘。</p></div>
+      <div><h4>作答須知</h4><p>作答時不顯示答案。不確定時，選你覺得最合理的。最後一題要寫出理由並引用課文。</p></div>
+      <div><h4>編者的話</h4><p>這份檢查讓老師了解大家讀懂了哪些地方，不公布分數。認真寫，就是最好的答案。</p></div>
+    </div>
     <div id="homeWelcome" class="welcome hidden"></div>
   </section>
   <div class="homebtns">
@@ -179,7 +231,6 @@ body.screen header.top{display:none}
   </div>
   <h3>作答三步驟</h3>
   <div class="steps"><div><b>1</b>登記班級<br>座號、姓名</div><div><b>2</b>讀題作答<br>9 選 1 寫</div><div><b>3</b>按下送出<br>交給老師</div></div>
-  <p class="small muted" style="text-align:center;margin-top:18px">這份小檢查是讓老師了解大家讀懂了哪些地方，不會公布分數。</p>
 </main>
 
 <main id="pg-student" class="wrap hidden">
@@ -260,7 +311,7 @@ body.screen header.top{display:none}
 <!-- 登記視窗 -->
 <div class="mask hidden" id="regMask">
   <div class="modal">
-    <h2>借閱登記</h2>
+    <h2>後測登記</h2>
     <p class="muted small">只需要班級、座號和姓名，這台裝置下次會自動記住。</p>
     <label class="f">班級</label><input class="t" id="rCls" placeholder="例如 801" inputmode="numeric" autocomplete="off">
     <label class="f">座號</label><input class="t" id="rSeat" placeholder="例如 12" inputmode="numeric" autocomplete="off">
@@ -1008,7 +1059,8 @@ function renderHome(){
 window.addEventListener("hashchange", route);
 window.addEventListener("beforeunload", e => { if(quiz && !$("#v-quiz").classList.contains("hidden")){ e.preventDefault(); e.returnValue = ""; } });
 $("#topTitle").onclick = () => { location.hash = "#"; };
-if(window.Art){ document.body.insertAdjacentHTML("afterbegin", Art.defs()); $("#heroArt").innerHTML = Art.stillLife() + Art.table(640); }
+if(window.Art){ document.body.insertAdjacentHTML("afterbegin", Art.defs()); }
+{ const d = new Date(); const w = "日一二三四五六"[d.getDay()]; const el = $("#npDate"); if(el) el.textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日　星期${w}`; }
 renderWho(); route();
 window.__MZ = { analyze, classifyOpen };
 })();
