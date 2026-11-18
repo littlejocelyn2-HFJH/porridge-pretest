@@ -616,7 +616,7 @@ $("#retryPending").onclick = async () => { const p = LS.get("mz_pending", null);
 /* ================= 成績頁／教師端 ================= */
 let DATA = { rows:[], authed:false };
 let curCls = LS.get("mz_cls_sel", "");
-let curTab = "compare";
+let curTab = "bank";
 let attemptMode = CFG.analyzeAttempt === "latest" ? "latest" : "first";
 let suspectSec = Number(LS.get("mz_suspect_sec", CFG.suspectSeconds || 90)) || 90;
 let recFilter = { seat:"", onlySus:false };
@@ -669,7 +669,7 @@ function renderPublic(){
 }
 
 const TABS = [
-  ["compare","前後測對照"],["overview","全班概況"],["items","各題分析"],["students","學生診斷"],["open","開放題分類"],
+  ["bank","題目與答案"],["compare","前後測對照"],["overview","全班概況"],["items","各題分析"],["students","學生診斷"],["open","開放題分類"],
   ["records","作答紀錄"],["guide","後測結果解讀表"],["tools","教師區"]
 ];
 function renderTeacher(){
@@ -677,7 +677,7 @@ function renderTeacher(){
   if(!DATA.authed) return;
   $("#tabs").innerHTML = TABS.map(([k,l]) => `<button class="${k === curTab ? "on" : ""}" data-t="${k}">${l}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b => b.onclick = () => { curTab = b.dataset.t; renderTeacher(); });
-  const fn = { compare:tabCompare, overview:tabOverview, items:tabItems, students:tabStudents, open:tabOpen, records:tabRecords, guide:tabGuide, tools:tabTools }[curTab];
+  const fn = { bank:tabBank, compare:tabCompare, overview:tabOverview, items:tabItems, students:tabStudents, open:tabOpen, records:tabRecords, guide:tabGuide, tools:tabTools }[curTab];
   $("#tabBody").innerHTML = ""; fn($("#tabBody"));
 }
 function analyzedClass(){
@@ -883,17 +883,28 @@ function exportCSV(S){
   const aEl = document.createElement("a"); aEl.href = url; aEl.download = `以粥養生後測診斷_${curCls}.csv`; document.body.appendChild(aEl); aEl.click(); aEl.remove();
 }
 
+/* ---- 題目與答案（老師檢視） ---- */
+function tabBank(el){
+  const hasKey = Q.every(q => q.answer != null);
+  let h = `<div class="card"><div class="row"><h3 style="margin:0">後測題目與答案</h3><span class="spacer"></span><button class="btn sm" onclick="window.print()">列印</button></div>
+    <p class="small muted" style="margin:6px 0 0">${hasKey ? "答案從後端讀取，只有老師登入後看得到。" : "<b style='color:var(--bad)'>目前讀不到答案</b>：後端還沒換成新版 Code.gs＋PostKey，部署後重新整理就會出現。題目可以先看。"}</p></div>`;
+  Q.forEach((q,i) => {
+    const L = P.layers[q.layer-1] || {};
+    h += `<div class="card"><div class="qnum">第 ${q.id} 題　<span class="pill L${q.layer}">第${q.layer}層 ${esc(L.name||"")}</span>${q.part ? `　<span class="small">【${esc(q.part)}】</span>` : ""}</div>
+      <div class="stem">${esc(q.stem)}</div>` +
+      q.options.map((o,k) => { const ok = hasKey && k === q.answer;
+        return `<div class="optline"><b class="${ok ? "c-ok" : ""}">${LETTER[k]}${ok ? "✓" : ""}</b><div><div class="${ok ? "c-ok" : ""}">${esc(o.t)}${o.tag && P.tags[o.tag] ? `<span class="tag">${esc(P.tags[o.tag].label)}</span>` : ""}</div>${o.why ? `<div class="small muted">${esc(o.why)}</div>` : ""}</div><div></div></div>`; }).join("") + `</div>`;
+  });
+  h += `<div class="card"><div class="qnum">第 ${OPEN.id} 題　<span class="pill L4">開放題（必填）</span></div><div class="stem">${esc(OPEN.stem)}</div>
+    <p>${esc(OPEN.prompt||"")}</p><p class="small muted">學生看到的句型提示：${esc(OPEN.hint||"")}</p>
+    <h4 style="margin:10px 0 4px">評分層級</h4><ul class="feat">${(P.openNames||[]).map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>`;
+  el.innerHTML = h;
+}
+
 /* ---- 開放題分類 ---- */
 function tabOpen(el){
   const S = analyzedClass();
-  let h = modeSwitch() + `<div class="card small">
-    <b>評分規準</b>（文字短不代表理解差，請看內容）<br>
-    <b>第一層 內容辨認</b>：能指出印象深刻的內容，但尚未說明意義。<br>
-    <b>第二層 感受連結</b>：能說明自己為什麼有感受，能連結自身生活經驗或個人感受。<br>
-    <b>第三層 文本詮釋</b>：能引用或指出具體文本細節，並說明背後的親情、生活記憶或文化意涵。<br>
-    <span class="muted">系統依關鍵詞先初判，老師可在「學生診斷」裡改判。</span></div>`;
-  const choiceCount = {}; S.forEach(x => choiceCount[x.a.openChoice || "—"] = (choiceCount[x.a.openChoice || "—"] || 0) + 1);
-  h += `<div class="card"><h3 style="margin-top:0">大家印象最深刻的部分</h3>` + OPEN.choices.map(c => `<div class="hrow"><div><b>${c.k}</b></div><div><div class="small">${esc(c.t)}</div><div class="bar"><b style="width:${pct(choiceCount[c.k]||0,S.length)}%;background:var(--accent)"></b></div></div><div><b>${choiceCount[c.k]||0}</b> 人</div></div>`).join("") + `</div>`;
+  let h = modeSwitch() + `<div class="card small"><b>評分層級</b>（文字短不代表理解差，請看內容）<br>${(P.openNames||[]).map(esc).join("<br>")}<br><span class="muted">系統依關鍵詞先初判，老師可在「學生診斷」裡改判。</span></div>`;
   LVLS.forEach(l => {
     const g = S.filter(x => x.A.openLevel === l);
     h += `<div class="card"><h3 style="margin-top:0">${OPEN_NAMES[l]}（${g.length} 人）</h3>`;
@@ -957,7 +968,7 @@ function tabGuide(el){
   h += `<div class="card"><h3 style="margin-top:0">文章結構（起承轉合）與題目對照</h3><table class="tb"><thead><tr><th>結構</th><th>段落</th><th>核心焦點</th><th>對應題目</th></tr></thead><tbody>` +
     P.structure.map(s => `<tr><td><b>【${s.part}】</b></td><td>${esc(s.paras)}</td><td>${esc(s.focus)}<br><span class="small muted">${esc(s.point)}</span></td><td>${Q.filter(q => q.part === s.part).map(q => q.id).join("、") || `第${OPEN.id}題`}</td></tr>`).join("") + `</tbody></table></div>`;
   h += `<div class="card"><h3 style="margin-top:0">題目、答案與解析（老師專用）</h3>` + Q.map(q => `<div style="margin:10px 0"><b>${q.id}.</b> ${esc(q.stem)} <span class="pill L${q.layer}">${esc(P.layers[q.layer-1].short)}</span> <span class="small muted">${esc(q.para)}</span><br>` +
-    q.options.map((o,k) => `<span class="${k === q.answer ? "c-ok" : ""}">（${LETTER[k]}）${esc(o.t)}</span>`).join("<br>") + `<br><span class="small muted">答案 ${LETTER[q.answer]}｜${esc(q.options[q.answer].why)}</span></div>`).join("") + `</div>`;
+    q.options.map((o,k) => `<span class="${k === q.answer ? "c-ok" : ""}">（${LETTER[k]}）${esc(o.t)}</span>`).join("<br>") + `<br><span class="small muted">答案 ${q.answer != null ? LETTER[q.answer] + "｜" + esc(q.options[q.answer].why) : "（部署後端後才顯示）"}</span></div>`).join("") + `</div>`;
   el.innerHTML = h;
 }
 
