@@ -67,3 +67,10 @@
 - 疑似亂答（用時少於 90 秒，或 8 題選同一個選項）只是提醒，請老師確認。
 - 學生網路斷線時，交卷畫面會給「成績碼」，請學生私訊給老師，到教師區匯入。
 - 改了 `questions.js` 或 `config.js` 之後，請把 `index.html` 裡 `?v=` 後面的數字加 1，學生端按重新整理（電腦 Ctrl+F5）。
+
+## 後測（post.html）
+
+- 學生網址：`https://littlejocelyn2-hfjh.github.io/porridge-pretest/post.html`
+- 和前測共用同一張 Google 試算表、同一個 Apps Script 網址；後測紀錄寫在「後測紀錄（老師看）」工作表。
+- **答案不在 GitHub**：後測答案放在老師私下拿到的 `PostKey.gs`，要在 Apps Script 另外新增一個指令碼檔案貼上。
+- 老師頁第一個分頁「前後測對照」：各層次通過人數的前後變化、每位同學的層級與錯題變化。
